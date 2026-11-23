@@ -1,0 +1,121 @@
+Category,Function,Description,Example,Status
+Excel,SUM(),หาผลรวมของตัวเลขในช่วงที่กำหนด,"=SUM(A1:A10)",ยังไม่เริ่ม
+Excel,AVERAGE(),หาค่าเฉลี่ยของตัวเลข,"=AVERAGE(B1:B10)",ยังไม่เริ่ม
+Excel,IF(),ตรวจสอบเงื่อนไขและคืนค่าตามจริง/เท็จ,"=IF(C2>50,""ผ่าน"",""ตก"")",ยังไม่เริ่ม
+Excel,COUNT(),นับจำนวนเซลล์ที่มีเฉพาะตัวเลข,"=COUNT(A1:A20)",ยังไม่เริ่ม
+Excel,COUNTA(),นับจำนวนเซลล์ที่ไม่ว่างทั้งหมด,"=COUNTA(A1:A20)",ยังไม่เริ่ม
+Excel,COUNTIF(),นับจำนวนเซลล์ที่ตรงตาม 1 เงื่อนไข,"=COUNTIF(A:A,""BKK"")",ยังไม่เริ่ม
+Excel,COUNTIFS(),นับจำนวนเซลล์ที่ตรงตามหลายเงื่อนไข,"=COUNTIFS(A:A,""BKK"",B:B,"">100"")",ยังไม่เริ่ม
+Excel,SUMIF(),หาผลรวมตาม 1 เงื่อนไข,"=SUMIF(A:A,""BKK"",B:B)",ยังไม่เริ่ม
+Excel,SUMIFS(),หาผลรวมตามหลายเงื่อนไข,"=SUMIFS(C:C,A:A,""BKK"",B:B,""2026"")",ยังไม่เริ่ม
+Excel,VLOOKUP(),ค้นหาข้อมูลในแนวตั้งจากคอลัมน์ซ้ายสุด,"=VLOOKUP(E2,A:C,3,FALSE)",ยังไม่เริ่ม
+Excel,HLOOKUP(),ค้นหาข้อมูลในแนวนอนจากแถวบนสุด,"=HLOOKUP(E2,A1:D5,3,FALSE)",ยังไม่เริ่ม
+Excel,XLOOKUP(),ค้นหาข้อมูลแบบยืดหยุ่นแทน VLOOKUP,"=XLOOKUP(E2,A:A,B:B,""ไม่พบ"")",ยังไม่เริ่ม
+Excel,INDEX(),ดึงค่าจากตำแหน่งแถวและคอลัมน์ที่ระบุ,"=INDEX(A1:C10,2,3)",ยังไม่เริ่ม
+Excel,MATCH(),หาตำแหน่งลำดับของค่าที่ค้นหาในช่วง,"=MATCH(""BKK"",A1:A10,0)",ยังไม่เริ่ม
+Excel,CONCAT(),เชื่อมข้อความจากหลายเซลล์เข้าด้วยกัน,"=CONCAT(A2,"" "",B2)",ยังไม่เริ่ม
+Excel,LEFT(),ตัดข้อความจากด้านซ้ายตามจำนวนอักขระ,"=LEFT(A2,3)",ยังไม่เริ่ม
+Excel,RIGHT(),ตัดข้อความจากด้านขวาตามจำนวนอักขระ,"=RIGHT(A2,4)",ยังไม่เริ่ม
+Excel,MID(),ตัดข้อความจากตรงกลางตามตำแหน่งที่ระบุ,"=MID(A2,2,3)",ยังไม่เริ่ม
+Excel,LEN(),นับจำนวนตัวอักษรทั้งหมดในเซลล์,"=LEN(A2)",ยังไม่เริ่ม
+Excel,TRIM(),ลบช่องว่างส่วนเกินหน้า-หลังข้อความ,"=TRIM(A2)",ยังไม่เริ่ม
+Excel,UPPER(),แปลงข้อความภาษาอังกฤษเป็นตัวพิมพ์ใหญ่ทั้งหมด,"=UPPER(A2)",ยังไม่เริ่ม
+Excel,LOWER(),แปลงข้อความภาษาอังกฤษเป็นตัวพิมพ์เล็กทั้งหมด,"=LOWER(A2)",ยังไม่เริ่ม
+Excel,PROPER(),แปลงตัวอักษรตัวแรกของทุกคำเป็นพิมพ์ใหญ่,"=PROPER(A2)",ยังไม่เริ่ม
+Excel,TEXT(),แปลงตัวเลขหรือวันที่เป็นข้อความตามรูปแบบ,"=TEXT(A2,""dd/mm/yyyy"")",ยังไม่เริ่ม
+Excel,ROUND(),ปัดเศษทศนิยมตามหลักคณิตศาสตร์,"=ROUND(A2,2)",ยังไม่เริ่ม
+Excel,ROUNDUP(),ปัดเศษทศนิยมขึ้นเสมอ,"=ROUNDUP(A2,0)",ยังไม่เริ่ม
+Excel,ROUNDDOWN(),ปัดเศษทศนิยมลงเสมอ,"=ROUNDDOWN(A2,0)",ยังไม่เริ่ม
+Excel,TODAY(),แสดงวันที่ปัจจุบันอัตโนมัติ,"=TODAY()",ยังไม่เริ่ม
+Excel,NOW(),แสดงวันที่และเวลาปัจจุบันอัตโนมัติ,"=NOW()",ยังไม่เริ่ม
+Excel,SUBTOTAL(),คำนวณสรุปผลเฉพาะแถวที่ไม่ได้ถูกซ่อนจากการกรอง,"=SUBTOTAL(9,B2:B100)",ยังไม่เริ่ม
+SQL,SELECT,เลือกคอลัมน์ที่ต้องการแสดงผล,"SELECT name, age FROM users;",ยังไม่เริ่ม
+SQL,DISTINCT,ดึงเฉพาะค่าที่ไม่ซ้ำกันออกมาแสดง,"SELECT DISTINCT city FROM customers;",ยังไม่เริ่ม
+SQL,FROM,ระบุชื่อตารางที่ต้องการดึงข้อมูล,"SELECT * FROM sales;",ยังไม่เริ่ม
+SQL,WHERE,กรองแถวข้อมูลตามเงื่อนไขที่กำหนด,"SELECT * FROM sales WHERE amount > 500;",ยังไม่เริ่ม
+SQL,GROUP BY,จัดกลุ่มข้อมูลเพื่อคำนวณค่าทางสถิติ,"SELECT dept, COUNT(*) FROM emp GROUP BY dept;",ยังไม่เริ่ม
+SQL,ORDER BY,เรียงลำดับข้อมูลจากน้อยไปมากหรือมากไปน้อย,"SELECT * FROM sales ORDER BY amount DESC;",ยังไม่เริ่ม
+SQL,HAVING,กรองข้อมูลหลังจากจัดกลุ่มด้วย GROUP BY,"SELECT dept, SUM(sal) FROM emp GROUP BY dept HAVING SUM(sal) > 50000;",ยังไม่เริ่ม
+SQL,JOIN,เชื่อมตารางสองตารางเข้าด้วยกัน,"SELECT * FROM a JOIN b ON a.id = b.id;",ยังไม่เริ่ม
+SQL,LEFT JOIN,เชื่อมตารางโดยยึดข้อมูลฝั่งซ้ายเป็นหลัก,"SELECT * FROM a LEFT JOIN b ON a.id = b.id;",ยังไม่เริ่ม
+SQL,RIGHT JOIN,เชื่อมตารางโดยยึดข้อมูลฝั่งขวาเป็นหลัก,"SELECT * FROM a RIGHT JOIN b ON a.id = b.id;",ยังไม่เริ่ม
+SQL,INNER JOIN,เชื่อมตารางโดยดึงเฉพาะข้อมูลที่มีตรงกันทั้งสองฝั่ง,"SELECT * FROM a INNER JOIN b ON a.id = b.id;",ยังไม่เริ่ม
+SQL,FULL JOIN,เชื่อมตารางโดยดึงข้อมูลทั้งหมดจากทั้งสองฝั่ง,"SELECT * FROM a FULL OUTER JOIN b ON a.id = b.id;",ยังไม่เริ่ม
+SQL,CROSS JOIN,จับคู่ทุกแถวของตารางแรกกับทุกแถวของตารางที่สอง,"SELECT * FROM sizes CROSS JOIN colors;",ยังไม่เริ่ม
+SQL,UNION,รวมผลลัพธ์จาก 2 คำสั่ง SELECT โดยตัดแถวซ้ำออก,"SELECT city FROM a UNION SELECT city FROM b;",ยังไม่เริ่ม
+SQL,UNION ALL,รวมผลลัพธ์จาก 2 คำสั่ง SELECT โดยเก็บแถวซ้ำไว้ทั้งหมด,"SELECT city FROM a UNION ALL SELECT city FROM b;",ยังไม่เริ่ม
+SQL,CASE WHEN,สร้างเงื่อนไขแบ่งกลุ่มข้อมูลคล้ายสูตร IF,"SELECT CASE WHEN score>=50 THEN 'Pass' ELSE 'Fail' END FROM exam;",ยังไม่เริ่ม
+SQL,COALESCE,คืนค่าแรกที่ไม่ใช่ NULL จากรายการที่กำหนด,"SELECT COALESCE(phone, email, 'N/A') FROM users;",ยังไม่เริ่ม
+SQL,COUNT(),นับจำนวนแถวข้อมูล,"SELECT COUNT(*) FROM orders;",ยังไม่เริ่ม
+SQL,SUM(),หาผลรวมของคอลัมน์ตัวเลข,"SELECT SUM(amount) FROM orders;",ยังไม่เริ่ม
+SQL,AVG(),หาค่าเฉลี่ยของคอลัมน์ตัวเลข,"SELECT AVG(price) FROM products;",ยังไม่เริ่ม
+SQL,MIN(),หาค่าต่ำสุดในคอลัมน์,"SELECT MIN(price) FROM products;",ยังไม่เริ่ม
+SQL,MAX(),หาค่าสูงสุดในคอลัมน์,"SELECT MAX(price) FROM products;",ยังไม่เริ่ม
+SQL,BETWEEN,กรองข้อมูลที่อยู่ในช่วงที่กำหนด,"SELECT * FROM sales WHERE date BETWEEN '2026-01-01' AND '2026-01-31';",ยังไม่เริ่ม
+SQL,EXISTS,ตรวจสอบว่ามีข้อมูลตรงตาม Subquery หรือไม่,"SELECT * FROM cust c WHERE EXISTS (SELECT 1 FROM orders o WHERE o.cid=c.id);",ยังไม่เริ่ม
+SQL,IN,กรองข้อมูลที่ตรงกับรายการใดรายการหนึ่งในวงเล็บ,"SELECT * FROM users WHERE city IN ('BKK', 'CNX');",ยังไม่เริ่ม
+SQL,CTE (WITH),สร้างตารางชั่วคราวให้อ่านโค้ดซับซ้อนง่ายขึ้น,"WITH temp AS (SELECT * FROM sales) SELECT * FROM temp;",ยังไม่เริ่ม
+SQL,ROW_NUMBER(),รันเลขลำดับแถวแบบไม่ซ้ำกันตามการจัดกลุ่ม,"SELECT name, ROW_NUMBER() OVER(ORDER BY sales DESC) FROM emp;",ยังไม่เริ่ม
+SQL,RANK(),จัดอันดับโดยเว้นเลขลำดับถัดไปเมื่อมีค่าเท่ากัน,"SELECT name, RANK() OVER(ORDER BY score DESC) FROM students;",ยังไม่เริ่ม
+SQL,DENSE_RANK(),จัดอันดับโดยไม่เว้นเลขลำดับเมื่อมีค่าเท่ากัน,"SELECT name, DENSE_RANK() OVER(ORDER BY score DESC) FROM students;",ยังไม่เริ่ม
+SQL,LIMIT,จำกัดจำนวนแถวสูงสุดที่ต้องการแสดงผล,"SELECT * FROM sales ORDER BY amount DESC LIMIT 10;",ยังไม่เริ่ม
+Power BI DAX,SUM(),หาผลรวมของคอลัมน์ในตาราง,"Total Sales = SUM(Sales[Amount])",ยังไม่เริ่ม
+Power BI DAX,COUNT(),นับจำนวนแถวที่มีตัวเลขในคอลัมน์,"Count Orders = COUNT(Sales[OrderID])",ยังไม่เริ่ม
+Power BI DAX,AVERAGE(),หาค่าเฉลี่ยของคอลัมน์ตัวเลข,"Avg Sales = AVERAGE(Sales[Amount])",ยังไม่เริ่ม
+Power BI DAX,MIN() / MAX(),หาค่าต่ำสุดหรือสูงสุดในคอลัมน์,"Max Price = MAX(Products[Price])",ยังไม่เริ่ม
+Power BI DAX,CALCULATE(),เปลี่ยนบริบทการกรอง (Filter Context) ของการคำนวณ,"BKK Sales = CALCULATE(SUM(Sales[Amount]), Sales[City]=""BKK"")",ยังไม่เริ่ม
+Power BI DAX,FILTER(),คืนค่าตารางที่ถูกกรองตามเงื่อนไข,"HighVal = FILTER(Sales, Sales[Amount] > 1000)",ยังไม่เริ่ม
+Power BI DAX,ALL(),ล้างตัวกรองทั้งหมดออกจากตารางหรือคอลัมน์,"All Sales = CALCULATE([Total Sales], ALL(Sales))",ยังไม่เริ่ม
+Power BI DAX,ALLEXCEPT(),ล้างตัวกรองทั้งหมดยกเว้นคอลัมน์ที่ระบุ,"Cat Sales = CALCULATE([Total Sales], ALLEXCEPT(Sales, Sales[Category]))",ยังไม่เริ่ม
+Power BI DAX,VALUES(),คืนค่าตาราง 1 คอลัมน์ที่มีค่าไม่ซ้ำกันตามบริบทปัจจุบัน,"Unique Cities = COUNTROWS(VALUES(Sales[City]))",ยังไม่เริ่ม
+Power BI DAX,DISTINCT(),คืนค่าตาราง 1 คอลัมน์ที่มีค่าไม่ซ้ำกัน (ไม่รวมแถวว่างจากการเชื่อม),"Distinct Prod = COUNTROWS(DISTINCT(Sales[ProductID]))",ยังไม่เริ่ม
+Power BI DAX,RELATED(),ดึงค่าจากตารางอื่นที่มีความสัมพันธ์กัน (ฝั่ง One),"Unit Cost = RELATED(Products[Cost])",ยังไม่เริ่ม
+Power BI DAX,RELATEDTABLE(),ดึงตารางที่สัมพันธ์กัน (ฝั่ง Many) มาคำนวณ,"Order Count = COUNTROWS(RELATEDTABLE(Sales))",ยังไม่เริ่ม
+Power BI DAX,USERELATIONSHIP(),เปิดใช้งานความสัมพันธ์เส้นประ (Inactive) ชั่วคราว,"Ship Sales = CALCULATE([Total Sales], USERELATIONSHIP(Sales[ShipDate], 'Date'[Date]))",ยังไม่เริ่ม
+Power BI DAX,TOTALYTD(),คำนวณยอดสะสมตั้งแต่ต้นปีจนถึงปัจจุบัน (Year-to-Date),"Sales YTD = TOTALYTD([Total Sales], 'Date'[Date])",ยังไม่เริ่ม
+Power BI DAX,DATESYTD(),คืนค่าชุดวันที่ตั้งแต่ต้นปีจนถึงวันล่าสุดในบริบท,"YTD Calc = CALCULATE([Total Sales], DATESYTD('Date'[Date]))",ยังไม่เริ่ม
+Power BI DAX,SAMEPERIODLASTYEAR(),ดึงช่วงเวลาเดียวกันของปีก่อนมาเปรียบเทียบ,"PY Sales = CALCULATE([Total Sales], SAMEPERIODLASTYEAR('Date'[Date]))",ยังไม่เริ่ม
+Power BI DAX,DATEADD(),เลื่อนช่วงเวลาไปข้างหน้าหรือย้อนหลังตามหน่วยที่ระบุ,"PM Sales = CALCULATE([Total Sales], DATEADD('Date'[Date], -1, MONTH))",ยังไม่เริ่ม
+Power BI DAX,DIVIDE(),หารตัวเลขอย่างปลอดภัย (ป้องกัน Error หารด้วย 0),"Margin = DIVIDE([Profit], [Revenue], 0)",ยังไม่เริ่ม
+Power BI DAX,SWITCH(),ตรวจสอบหลายเงื่อนไขแทนการซ้อน IF หลายชั้น,"Grade = SWITCH(TRUE(), [Score]>=80, ""A"", [Score]>=70, ""B"", ""C"")",ยังไม่เริ่ม
+Power BI DAX,IF(),ตรวจสอบเงื่อนไขและคืนค่าตามจริง/เท็จ,"Status = IF([Profit] > 0, ""Profit"", ""Loss"")",ยังไม่เริ่ม
+Power BI DAX,HASONEVALUE(),ตรวจสอบว่าคอลัมน์ที่ระบุถูกกรองเหลือเพียงค่าเดียวหรือไม่,"Check = IF(HASONEVALUE(Sales[City]), VALUES(Sales[City]), ""All"")",ยังไม่เริ่ม
+Power BI DAX,SELECTEDVALUE(),ดึงค่าที่ถูกเลือกเพียงค่าเดียว (ถ้าเลือกหลายค่าให้คืนค่าสำรอง),"Selected City = SELECTEDVALUE(Sales[City], ""Multiple"")",ยังไม่เริ่ม
+Power BI DAX,SUMX(),คำนวณทีละแถวแล้วนำผลลัพธ์มารวมกัน,"Total Rev = SUMX(Sales, Sales[Qty] * Sales[Price])",ยังไม่เริ่ม
+Power BI DAX,AVERAGEX(),คำนวณทีละแถวแล้วนำผลลัพธ์มาหาค่าเฉลี่ย,"Avg Rev = AVERAGEX(Sales, Sales[Qty] * Sales[Price])",ยังไม่เริ่ม
+Power BI DAX,COUNTROWS(),นับจำนวนแถวทั้งหมดในตาราง,"Total Rows = COUNTROWS(Sales)",ยังไม่เริ่ม
+Power BI DAX,RANKX(),จัดอันดับค่าในตารางตามเงื่อนไขที่กำหนด,"Sales Rank = RANKX(ALL(Products), [Total Sales], , DESC)",ยังไม่เริ่ม
+Power BI DAX,TOPN(),ดึงข้อมูล N อันดับแรกจากตาราง,"Top 5 Sales = CALCULATE([Total Sales], TOPN(5, Products, [Total Sales]))",ยังไม่เริ่ม
+Power BI DAX,CONCATENATEX(),เชื่อมข้อความจากหลายแถวเข้าด้วยกันโดยมีตัวคั่น,"All Items = CONCATENATEX(Products, Products[Name], "", "")",ยังไม่เริ่ม
+Power BI DAX,ISBLANK(),ตรวจสอบว่าค่าหรือนิพจน์เป็นค่าว่างหรือไม่,"Clean Sales = IF(ISBLANK([Total Sales]), 0, [Total Sales])",ยังไม่เริ่ม
+Power BI DAX,KEEPFILTERS(),คงตัวกรองเดิมไว้ร่วมกับตัวกรองใหม่ใน CALCULATE,"Keep BKK = CALCULATE([Total Sales], KEEPFILTERS(Sales[City]=""BKK""))",ยังไม่เริ่ม
+Python (Pandas),pd.read_csv(),นำเข้าข้อมูลจากไฟล์ CSV มาเป็น DataFrame,"df = pd.read_csv('data.csv')",ยังไม่เริ่ม
+Python (Pandas),pd.read_excel(),นำเข้าข้อมูลจากไฟล์ Excel มาเป็น DataFrame,"df = pd.read_excel('data.xlsx', sheet_name='Sheet1')",ยังไม่เริ่ม
+Python (Pandas),head(),ดูข้อมูล 5 แถวแรกเพื่อเช็กโครงสร้างตาราง,"df.head()",ยังไม่เริ่ม
+Python (Pandas),tail(),ดูข้อมูล 5 แถวสุดท้ายของตาราง,"df.tail()",ยังไม่เริ่ม
+Python (Pandas),info(),ดูสรุปโครงสร้างตาราง ชนิดข้อมูล และจำนวนค่าไม่ว่าง,"df.info()",ยังไม่เริ่ม
+Python (Pandas),describe(),"ดูค่าสถิติพื้นฐาน (mean, min, max, quartile) ของคอลัมน์ตัวเลข","df.describe()",ยังไม่เริ่ม
+Python (Pandas),shape,ดูขนาดของตารางเป็นจำนวน (แถว คอลัมน์),"df.shape",ยังไม่เริ่ม
+Python (Pandas),columns,ดูรายชื่อคอลัมน์ทั้งหมดใน DataFrame,"df.columns",ยังไม่เริ่ม
+Python (Pandas),dtypes,ตรวจสอบชนิดข้อมูลของแต่ละคอลัมน์,"df.dtypes",ยังไม่เริ่ม
+Python (Pandas),rename(),เปลี่ยนชื่อคอลัมน์หรือดัชนี,"df.rename(columns={'old': 'new'}, inplace=True)",ยังไม่เริ่ม
+Python (Pandas),isnull(),ตรวจสอบค่าว่าง (Missing Values) ในตาราง,"df.isnull().sum()",ยังไม่เริ่ม
+Python (Pandas),notnull(),ตรวจสอบเซลล์ที่ไม่ใช่ค่าว่าง,"df[df['Age'].notnull()]",ยังไม่เริ่ม
+Python (Pandas),dropna(),ลบแถวหรือคอลัมน์ที่มีค่าว่างทิ้ง,"df.dropna(inplace=True)",ยังไม่เริ่ม
+Python (Pandas),fillna(),แทนที่ค่าว่างด้วยค่าที่กำหนด,"df['Age'].fillna(df['Age'].mean(), inplace=True)",ยังไม่เริ่ม
+Python (Pandas),groupby(),จัดกลุ่มข้อมูลเพื่อสรุปผลรวมหรือค่าเฉลี่ย,"df.groupby('Category')['Sales'].sum()",ยังไม่เริ่ม
+Python (Pandas),agg(),คำนวณค่าสถิติหลายรูปแบบพร้อมกันหลังจัดกลุ่ม,"df.groupby('Dept')['Salary'].agg(['mean', 'max'])",ยังไม่เริ่ม
+Python (Pandas),sort_values(),เรียงลำดับข้อมูลตามคอลัมน์ที่กำหนด,"df.sort_values(by='Sales', ascending=False)",ยังไม่เริ่ม
+Python (Pandas),value_counts(),นับความถี่ของแต่ละค่าที่ไม่ซ้ำกันในคอลัมน์,"df['City'].value_counts()",ยังไม่เริ่ม
+Python (Pandas),merge(),เชื่อม DataFrame สองตารางเข้าด้วยกันคล้าย SQL JOIN,"pd.merge(df1, df2, on='id', how='left')",ยังไม่เริ่ม
+Python (Pandas),join(),เชื่อม DataFrame โดยอ้างอิงจาก Index,"df1.join(df2, how='left')",ยังไม่เริ่ม
+Python (Pandas),concat(),นำ DataFrame หลายตารางมาต่อกันในแนวตั้งหรือแนวนอน,"pd.concat([df1, df2], ignore_index=True)",ยังไม่เริ่ม
+Python (Pandas),apply(),รันฟังก์ชันกำหนดเองกับทุกแถวหรือทุกคอลัมน์,"df['Tax'] = df['Price'].apply(lambda x: x * 0.07)",ยังไม่เริ่ม
+Python (Pandas),map(),จับคู่แปลงค่าใน Series ด้วย Dictionary หรือฟังก์ชัน,"df['Code'] = df['Gender'].map({'M': 1, 'F': 0})",ยังไม่เริ่ม
+Python (Pandas),pivot_table(),สร้างตารางสรุปข้อมูลแบบ Pivot Table คล้าย Excel,"pd.pivot_table(df, values='Sales', index='City', aggfunc='sum')",ยังไม่เริ่ม
+Python (Pandas),crosstab(),สร้างตารางแจกแจงความถี่ไขว้ระหว่าง 2 ตัวแปร,"pd.crosstab(df['Gender'], df['Purchased'])",ยังไม่เริ่ม
+Python (Pandas),nunique(),นับจำนวนค่าที่ไม่ซ้ำกันในคอลัมน์,"df['CustomerID'].nunique()",ยังไม่เริ่ม
+Python (Pandas),unique(),แสดงรายการค่าที่ไม่ซ้ำกันทั้งหมดในคอลัมน์,"df['Category'].unique()",ยังไม่เริ่ม
+Python (Pandas),astype(),แปลงชนิดข้อมูลของคอลัมน์,"df['Price'] = df['Price'].astype(float)",ยังไม่เริ่ม
+Python (Pandas),to_datetime(),แปลงข้อความวันที่ให้เป็นชนิดข้อมูล Datetime,"df['Date'] = pd.to_datetime(df['Date'])",ยังไม่เริ่ม
+Python (Pandas),to_csv(),ส่งออก DataFrame บันทึกเป็นไฟล์ CSV,"df.to_csv('output.csv', index=False)",ยังไม่เริ่ม
