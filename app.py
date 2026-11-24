@@ -6,109 +6,107 @@ from datetime import date
 st.set_page_config(page_title="Data Analyst Skill & Portfolio Hub", page_icon="🚀", layout="wide")
 
 # ==========================================
-# CUSTOM CSS ANIMATIONS & GAME UI
+# CUSTOM CSS ANIMATIONS & CLEAN UI
 # ==========================================
 st.markdown("""
 <style>
-    @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    @keyframes pulseGlow {
-        0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
-        50% { box-shadow: 0 0 28px rgba(236, 72, 153, 0.75); }
-    }
-    @keyframes popIn {
-        0% { transform: scale(0.95); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    .hero-box {
-        background: linear-gradient(-45deg, #4f46e5, #7c3aed, #ec4899, #06b6d4);
-        background-size: 300% 300%;
-        animation: gradientBG 8s ease infinite;
-        padding: 26px 30px;
-        border-radius: 20px;
-        color: white;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
-    }
-    .hero-title { font-size: 2.1rem; font-weight: 800; margin: 0; }
-    .hero-sub { font-size: 0.95rem; opacity: 0.92; margin-top: 6px; }
-    .rank-badge {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.22);
-        backdrop-filter: blur(8px);
-        padding: 7px 16px;
-        border-radius: 999px;
-        font-weight: 700;
-        font-size: 0.92rem;
-        margin-top: 14px;
-        border: 1px solid rgba(255,255,255,0.35);
-    }
-    .flashcard {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
-        color: white;
-        padding: 42px 28px;
-        border-radius: 22px;
-        text-align: center;
-        border: 2px solid #818cf8;
-        margin: 16px 0;
-        animation: pulseGlow 3.5s infinite, popIn 0.35s ease-out;
-    }
-    .gacha-card {
-        padding: 22px;
-        border-radius: 18px;
-        color: white;
-        animation: popIn 0.4s ease-out;
-        margin-bottom: 12px;
-    }
-    .rarity-SSR { background: linear-gradient(135deg, #f59e0b 0%, #ea580c 50%, #db2777 100%); border: 2px solid #fde047; box-shadow: 0 0 22px rgba(245, 158, 11, 0.6); }
-    .rarity-SR  { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); border: 2px solid #c4b5fd; box-shadow: 0 0 18px rgba(124, 58, 237, 0.5); }
-    .rarity-R   { background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border: 2px solid #7dd3fc; }
-
-    .badge-box {
-        display: inline-block;
-        padding: 7px 12px;
-        border-radius: 12px;
-        margin: 4px;
-        font-size: 0.82rem;
-        font-weight: 700;
-    }
-    .badge-unlocked { background: #ecfdf5; color: #047857; border: 1.5px solid #10b981; }
-    .badge-locked   { background: #f1f5f9; color: #94a3b8; border: 1.5px dashed #cbd5e1; }
-
-    .quiz-box {
-        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-        color: white;
-        padding: 28px;
-        border-radius: 18px;
-        border: 2px solid #6366f1;
-        margin-bottom: 18px;
-        animation: popIn 0.3s ease-out;
-    }
-    .proj-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-left: 6px solid #4f46e5;
-        border-radius: 14px;
-        padding: 18px 20px;
-        margin-bottom: 14px;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
-        color: #1e293b;
-    }
-    .tool-tag {
-        display: inline-block;
-        background: #ede9fe;
-        color: #5b21b6;
-        padding: 3px 10px;
-        border-radius: 999px;
-        font-size: 0.78rem;
-        font-weight: 600;
-        margin-right: 6px;
-        margin-top: 6px;
-    }
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.35); }
+    50% { box-shadow: 0 0 26px rgba(236, 72, 153, 0.65); }
+}
+.hero-box {
+    background: linear-gradient(-45deg, #4f46e5, #7c3aed, #ec4899, #06b6d4);
+    background-size: 300% 300%;
+    animation: gradientBG 8s ease infinite;
+    padding: 24px 28px;
+    border-radius: 18px;
+    color: white;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
+}
+.hero-title { font-size: 1.9rem; font-weight: 800; margin: 0; }
+.hero-sub { font-size: 0.92rem; opacity: 0.92; margin-top: 4px; }
+.rank-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.22);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    margin-top: 12px;
+    border: 1px solid rgba(255,255,255,0.35);
+}
+.flashcard {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+    color: white;
+    padding: 38px 24px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid #818cf8;
+    margin: 14px 0;
+    animation: pulseGlow 3.5s infinite;
+}
+.gacha-card {
+    padding: 20px;
+    border-radius: 16px;
+    color: white;
+    margin-bottom: 12px;
+}
+.rarity-SSR { background: linear-gradient(135deg, #f59e0b 0%, #ea580c 50%, #db2777 100%); border: 2px solid #fde047; }
+.rarity-SR  { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); border: 2px solid #c4b5fd; }
+.rarity-R   { background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border: 2px solid #7dd3fc; }
+.badge-box {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 10px;
+    margin: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+.badge-unlocked { background: #ecfdf5; color: #047857; border: 1.5px solid #10b981; }
+.badge-locked   { background: #f1f5f9; color: #94a3b8; border: 1.5px dashed #cbd5e1; }
+.quiz-box {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    color: white;
+    padding: 24px;
+    border-radius: 16px;
+    border: 2px solid #6366f1;
+    margin-bottom: 16px;
+}
+.proj-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-top: 5px solid #4f46e5;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+    color: #1e293b;
+}
+.proj-impact {
+    background: #f0fdf4;
+    border-left: 3px solid #10b981;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #065f46;
+    margin: 10px 0;
+}
+.tool-tag {
+    display: inline-block;
+    background: #ede9fe;
+    color: #5b21b6;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    margin: 3px 5px 0 0;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -148,7 +146,6 @@ if "best_streak" not in st.session_state:
 df = st.session_state.df
 proj_df = st.session_state.proj_df
 
-# คำนวณ XP และ Rank (รวม XP จากผลงานจริงด้วย!)
 mastered = len(df[df["Status"] == "ใช้คล่องแล้ว"])
 learning = len(df[df["Status"] == "กำลังเรียน"])
 total_skills = len(df)
@@ -165,13 +162,14 @@ def get_rank(points):
     return "🌱 Lv.1 Data Rookie"
 
 # Header Banner
-st.markdown(f"""
-<div class="hero-box">
-    <div class="hero-title">🚀 Personal Data Analyst Skill & Portfolio Hub</div>
-    <div class="hero-sub">คลังเก็บผลงานจริง + แพลตฟอร์มอัปสกิลสาย Data (Excel • SQL • Power BI DAX • Python • Automation)</div>
-    <div class="rank-badge">{get_rank(xp)} &nbsp;|&nbsp; ⭐ {xp:,} XP &nbsp;|&nbsp; 🏆 {total_projects} ผลงานจริง &nbsp;|&nbsp; 🔥 Best Combo: {st.session_state.best_streak}</div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    f'<div class="hero-box">'
+    f'<div class="hero-title">🚀 Personal Data Analyst Skill & Portfolio Hub</div>'
+    f'<div class="hero-sub">คลังเก็บผลงานจริง + แพลตฟอร์มอัปสกิลสาย Data (Excel • SQL • Power BI DAX • Python • Automation)</div>'
+    f'<div class="rank-badge">{get_rank(xp)} &nbsp;|&nbsp; ⭐ {xp:,} XP &nbsp;|&nbsp; 🏆 {total_projects} ผลงานจริง &nbsp;|&nbsp; 🔥 Best Combo: {st.session_state.best_streak}</div>'
+    f'</div>',
+    unsafe_allow_html=True
+)
 
 c1, c2, c3, c4, c5 = st.columns(5)
 c1.metric("🏆 ผลงานจริง", f"{total_projects} โปรเจกต์")
@@ -181,7 +179,6 @@ c4.metric("⏳ กำลังเรียน", f"{learning} ตัว")
 c5.metric("🎯 ความคืบหน้า", f"{progress_pct}%")
 st.progress(progress_pct / 100)
 
-# 6 แท็บหลัก (เอา Portfolio ขึ้นแท็บแรกเพื่อโชว์ความโปร!)
 tab_port, tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "🏆 พอร์ตผลงาน & สถิติ",
     "🎰 กาชาสกิล & เหรียญตรา",
@@ -192,37 +189,13 @@ tab_port, tab1, tab2, tab3, tab4, tab5 = st.tabs([
 ])
 
 # ==========================================
-# TAB 0: PORTFOLIO & EXPERIENCE HUB (NEW!)
+# TAB 0: CLEAN PORTFOLIO & EXPERIENCE HUB
 # ==========================================
 with tab_port:
-    p_left, p_right = st.columns([1.4, 1])
+    # ส่วนบน: กราฟสถิติ (ซ้าย) + จัดการพอร์ต & ดาวน์โหลด (ขวา)
+    top_l, top_r = st.columns([1.4, 1], gap="large")
 
-    with p_left:
-        st.subheader("📂 ผลงานและประสบการณ์จริง (Verified Projects)")
-        if len(proj_df) == 0:
-            st.info("ยังไม่มีรายการผลงาน ลองเพิ่มผลงานแรกของคุณทางด้านขวาได้เลยครับ!")
-        else:
-            for idx, row in proj_df.sort_values(by="Date", ascending=False).iterrows():
-                tools_list = [t.strip() for t in str(row["Tools"]).split(",") if t.strip()]
-                tags_html = "".join([f'<span class="tool-tag">{t}</span>' for t in tools_list])
-                link_html = f'<a href="{row["Link"]}" target="_blank" style="color:#4f46e5; font-weight:700; text-decoration:none;">🔗 เปิดดูผลงาน</a>' if str(row["Link"]).strip() else ""
-
-                st.markdown(f"""
-                <div class="proj-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.8rem; color:#64748b; font-weight:600;">📅 {row['Date']} • {row['Category']}</span>
-                        {link_html}
-                    </div>
-                    <div style="font-size:1.25rem; font-weight:800; color:#0f172a; margin:6px 0;">{row['Project_Name']}</div>
-                    <div style="font-size:0.9rem; color:#334155; margin-bottom:8px;">{row['Description']}</div>
-                    <div style="background:#f0fdf4; border-left:3px solid #10b981; padding:8px 12px; border-radius:6px; font-size:0.88rem; color:#065f46; margin-bottom:8px;">
-                        <b>📈 Business Impact:</b> {row['Impact']}
-                    </div>
-                    <div>{tags_html}</div>
-                </div>
-                """, unsafe_allow_html=True)
-
-    with p_right:
+    with top_l:
         st.subheader("📊 สถิติทักษะจากผลงานจริง")
         if len(proj_df) > 0:
             all_tools = []
@@ -231,8 +204,12 @@ with tab_port:
             if all_tools:
                 tool_counts = pd.Series(all_tools).value_counts().reset_index()
                 tool_counts.columns = ["เครื่องมือ", "จำนวนโปรเจกต์"]
-                st.bar_chart(tool_counts.set_index("เครื่องมือ"))
+                st.bar_chart(tool_counts.set_index("เครื่องมือ"), height=240)
+        else:
+            st.info("ยังไม่มีข้อมูลสถิติ ลองเพิ่มผลงานแรกของคุณได้เลยครับ")
 
+    with top_r:
+        st.subheader("⚙️ จัดการพอร์ต & ส่งออก")
         with st.expander("➕ เพิ่มผลงาน / โปรเจกต์ใหม่ (+50 XP)", expanded=False):
             with st.form("add_project_form", clear_on_submit=True):
                 p_name = st.text_input("ชื่อโปรเจกต์ / ผลงาน *")
@@ -250,8 +227,7 @@ with tab_port:
                 p_desc = st.text_area("รายละเอียดสั้นๆ", placeholder="อธิบายว่าทำอะไรและแก้ปัญหาอะไร")
                 p_link = st.text_input("ลิงก์ผลงาน / GitHub (ถ้ามี)")
 
-                submitted = st.form_submit_button("💾 บันทึกผลงานเข้าพอร์ต", type="primary", use_container_width=True)
-                if submitted:
+                if st.form_submit_button("💾 บันทึกผลงานเข้าพอร์ต", type="primary", use_container_width=True):
                     if not p_name or not p_tools or not p_impact:
                         st.error("กรุณากรอก ชื่อโปรเจกต์, เครื่องมือที่ใช้ และผลลัพธ์ทางธุรกิจ ให้ครบครับ")
                     else:
@@ -270,9 +246,6 @@ with tab_port:
                         st.balloons()
                         st.rerun()
 
-        st.divider()
-        st.subheader("📤 ส่งออกหลักฐาน & สำรองข้อมูล")
-        # สร้างไฟล์สรุปเรซูเม่ Markdown
         md_lines = [f"# Data Analyst Portfolio & Skill Summary\n- **Rank:** {get_rank(xp)} ({xp:,} XP)\n- **Verified Projects:** {total_projects}\n- **Core Skills Mastered:** {mastered}/{total_skills}\n\n## Featured Projects\n"]
         for _, r in proj_df.iterrows():
             md_lines.append(f"### {r['Project_Name']} ({r['Date']})\n- **Tools:** {r['Tools']}\n- **Impact:** {r['Impact']}\n- **Detail:** {r['Description']}\n")
@@ -283,12 +256,41 @@ with tab_port:
         d1.download_button("💾 สำรอง projects.csv", data=proj_df.to_csv(index=False).encode("utf-8-sig"), file_name="projects.csv", mime="text/csv", use_container_width=True)
         d2.download_button("💾 สำรอง skills.csv", data=df.to_csv(index=False).encode("utf-8-sig"), file_name="skills.csv", mime="text/csv", use_container_width=True)
 
+    st.divider()
+
+    # ส่วนล่าง: การ์ดผลงานแบบ 2 คอลัมน์เป็นระเบียบ (ไม่มีบั๊กโค้ดทะลุ)
+    st.subheader("📂 ผลงานและประสบการณ์จริง (Verified Projects)")
+    if len(proj_df) == 0:
+        st.info("ยังไม่มีรายการผลงาน กดปุ่ม '➕ เพิ่มผลงาน / โปรเจกต์ใหม่' ด้านบนได้เลยครับ!")
+    else:
+        sorted_proj = proj_df.sort_values(by="Date", ascending=False).reset_index(drop=True)
+        grid_cols = st.columns(2, gap="medium")
+        for idx, row in sorted_proj.iterrows():
+            tools_list = [t.strip() for t in str(row["Tools"]).split(",") if t.strip()]
+            tags_html = "".join([f'<span class="tool-tag">{t}</span>' for t in tools_list])
+            link_str = str(row["Link"]).strip()
+            link_html = f'<a href="{link_str}" target="_blank" style="color:#4f46e5; font-weight:700; text-decoration:none; font-size:0.85rem;">🔗 เปิดดูผลงาน</a>' if link_str else ""
+
+            card_html = (
+                f'<div class="proj-card">'
+                f'<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">'
+                f'<span style="font-size:0.78rem; color:#64748b; font-weight:600;">📅 {row["Date"]} • {row["Category"]}</span>'
+                f'{link_html}'
+                f'</div>'
+                f'<div style="font-size:1.18rem; font-weight:800; color:#0f172a; margin-bottom:6px;">{row["Project_Name"]}</div>'
+                f'<div style="font-size:0.88rem; color:#475569; line-height:1.5;">{row["Description"]}</div>'
+                f'<div class="proj-impact"><b>📈 Impact:</b> {row["Impact"]}</div>'
+                f'<div>{tags_html}</div>'
+                f'</div>'
+            )
+            with grid_cols[idx % 2]:
+                st.markdown(card_html, unsafe_allow_html=True)
+
 # ==========================================
 # TAB 1: SKILL GACHA & ACHIEVEMENTS
 # ==========================================
 with tab1:
-    col_l, col_r = st.columns([1.2, 1])
-
+    col_l, col_r = st.columns([1.2, 1], gap="large")
     with col_l:
         st.subheader("🎰 ตู้กาชาสุ่มสกิลประจำวัน")
         unmastered = df[df["Status"] != "ใช้คล่องแล้ว"]
@@ -303,31 +305,30 @@ with tab1:
             rarity = st.session_state.gacha_rarity
             rarity_label = {"SSR": "🌟 SSR (Legendary Skill)", "SR": "💎 SR (Epic Skill)", "R": "🔹 R (Core Skill)"}[rarity]
 
-            st.markdown(f"""
-            <div class="gacha-card rarity-{rarity}">
-                <div style="font-size:0.85rem; font-weight:800; letter-spacing:1px;">{rarity_label} • {g_row['Category']}</div>
-                <div style="font-size:1.9rem; font-weight:900; margin:8px 0;">{g_row['Function']}</div>
-                <div style="font-size:1rem; margin-bottom:12px;">{g_row['Description']}</div>
-                <div style="background:rgba(0,0,0,0.35); padding:10px 14px; border-radius:10px; font-family:monospace; font-size:0.88rem; color:#fef08a;">
-                    {g_row['Example']}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="gacha-card rarity-{rarity}">'
+                f'<div style="font-size:0.85rem; font-weight:800; letter-spacing:1px;">{rarity_label} • {g_row["Category"]}</div>'
+                f'<div style="font-size:1.8rem; font-weight:900; margin:8px 0;">{g_row["Function"]}</div>'
+                f'<div style="font-size:0.95rem; margin-bottom:12px;">{g_row["Description"]}</div>'
+                f'<div style="background:rgba(0,0,0,0.35); padding:10px 14px; border-radius:10px; font-family:monospace; font-size:0.86rem; color:#fef08a;">{g_row["Example"]}</div>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
 
             gb1, gb2, gb3 = st.columns(3)
-            if gb1.button("🎲 กดสุ่มกาชาใหม่!", use_container_width=True):
+            if gb1.button("🎲 สุ่มกาชาใหม่", use_container_width=True):
                 st.session_state.gacha_idx = random.choice(unmastered.index.tolist())
                 st.session_state.gacha_rarity = random.choices(["R", "SR", "SSR"], weights=[55, 30, 15])[0]
                 if st.session_state.gacha_rarity == "SSR":
                     st.toast("🌟 โอ้โห! สุ่มได้การ์ดระดับ SSR!", icon="🎉")
                     st.snow()
                 st.rerun()
-            if gb2.button("⏳ รับเข้าคลังเรียน (+5 XP)", use_container_width=True):
+            if gb2.button("⏳ กำลังเรียน (+5 XP)", use_container_width=True):
                 st.session_state.df.at[st.session_state.gacha_idx, "Status"] = "กำลังเรียน"
                 save_skills(st.session_state.df)
                 st.toast("บันทึกเป็น 'กำลังเรียน' แล้ว! +5 XP", icon="⏳")
                 st.rerun()
-            if gb3.button("✅ เคลียร์ภารกิจ! (+15 XP)", type="primary", use_container_width=True):
+            if gb3.button("✅ เคลียร์! (+15 XP)", type="primary", use_container_width=True):
                 st.session_state.df.at[st.session_state.gacha_idx, "Status"] = "ใช้คล่องแล้ว"
                 save_skills(st.session_state.df)
                 st.toast("เคลียร์ภารกิจสำเร็จ! +15 XP", icon="🏆")
@@ -336,12 +337,11 @@ with tab1:
                 st.rerun()
 
     with col_r:
-        st.subheader("🏅 เหรียญตราความสำเร็จ (Achievements)")
+        st.subheader("🏅 เหรียญตราความสำเร็จ")
         excel_done = len(df[(df["Category"] == "Excel") & (df["Status"] == "ใช้คล่องแล้ว")])
         sql_done = len(df[(df["Category"] == "SQL") & (df["Status"] == "ใช้คล่องแล้ว")])
-
         badges = [
-            ("🏆 Builder ตัวจริง (มีผลงาน ≥ 3 ชิ้น)", total_projects >= 3),
+            ("🏆 Builder ตัวจริง (ผลงาน ≥ 3 ชิ้น)", total_projects >= 3),
             ("🌱 ก้าวแรกสาย Data (คล่อง ≥ 1 ตัว)", mastered >= 1),
             ("🔥 นักล่าสกิล (คล่อง ≥ 10 ตัว)", mastered >= 10),
             ("⚡ Combo Master (ทายถูก 3 ข้อติด)", st.session_state.best_streak >= 3),
@@ -349,11 +349,7 @@ with tab1:
             ("🗄️ SQL Hunter (SQL ≥ 5 ตัว)", sql_done >= 5),
             ("👑 Data Legend (XP ≥ 500)", xp >= 500),
         ]
-        badge_html = ""
-        for name, unlocked in badges:
-            cls = "badge-unlocked" if unlocked else "badge-locked"
-            icon = "🔓 " if unlocked else "🔒 "
-            badge_html += f'<span class="badge-box {cls}">{icon}{name}</span>'
+        badge_html = "".join([f'<span class="badge-box {"badge-unlocked" if u else "badge-locked"}">{"🔓 " if u else "🔒 "}{n}</span>' for n, u in badges])
         st.markdown(badge_html, unsafe_allow_html=True)
 
         st.divider()
@@ -379,20 +375,21 @@ with tab2:
 
     card = df.loc[st.session_state.fc_idx]
     answer_html = (
-        f"<hr style='border-color:#4f46e5; margin:20px 0;'>"
-        f"<div style='font-size:1.15rem; color:#f1f5f9;'>{card['Description']}</div>"
-        f"<div style='margin-top:16px; background:#020617; padding:14px; border-radius:12px; font-family:monospace; color:#34d399; font-size:0.95rem;'>{card['Example']}</div>"
+        f'<hr style="border-color:#4f46e5; margin:18px 0;">'
+        f'<div style="font-size:1.1rem; color:#f1f5f9;">{card["Description"]}</div>'
+        f'<div style="margin-top:14px; background:#020617; padding:12px; border-radius:10px; font-family:monospace; color:#34d399; font-size:0.92rem;">{card["Example"]}</div>'
         if st.session_state.fc_flip
-        else "<div style='margin-top:18px; color:#94a3b8; font-size:0.95rem;'>นึกในใจก่อนว่าฟังก์ชันนี้ใช้ทำอะไร แล้วกดปุ่มพลิกการ์ดด้านล่าง 👇</div>"
+        else '<div style="margin-top:16px; color:#94a3b8; font-size:0.92rem;">นึกในใจก่อนว่าฟังก์ชันนี้ใช้ทำอะไร แล้วกดปุ่มพลิกการ์ดด้านล่าง 👇</div>'
     )
 
-    st.markdown(f"""
-    <div class="flashcard">
-        <div style="font-size:0.9rem; color:#c4b5fd; font-weight:600; margin-bottom:8px;">{card['Category']} • สถานะปัจจุบัน: {card['Status']}</div>
-        <div style="font-size:2.4rem; font-weight:900; color:#ffffff;">{card['Function']}</div>
-        {answer_html}
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="flashcard">'
+        f'<div style="font-size:0.88rem; color:#c4b5fd; font-weight:600; margin-bottom:8px;">{card["Category"]} • สถานะ: {card["Status"]}</div>'
+        f'<div style="font-size:2.2rem; font-weight:900; color:#ffffff;">{card["Function"]}</div>'
+        f'{answer_html}'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
     f1, f2, f3, f4 = st.columns(4)
     if f1.button("🔄 พลิกดูเฉลย", use_container_width=True):
@@ -421,8 +418,7 @@ with tab2:
 # TAB 3: KAHOOT-STYLE MINI GAME
 # ==========================================
 with tab3:
-    st.subheader("⚔️ เกมทายฟังก์ชันสาย Data (กดตัวเลือกได้เลย!)")
-
+    st.subheader("⚔️ เกมทายฟังก์ชันสาย Data")
     if "quiz_hp" not in st.session_state:
         st.session_state.quiz_hp = 3
         st.session_state.quiz_score = 0
@@ -466,18 +462,19 @@ with tab3:
             st.rerun()
     else:
         q = st.session_state.q_target
-        st.markdown(f"""
-        <div class="quiz-box">
-            <div style="font-size:0.9rem; color:#a5b4fc; font-weight:700;">หมวด: {q['Category']} — ฟังก์ชันใดทำหน้าที่นี้?</div>
-            <div style="font-size:1.5rem; font-weight:800; margin-top:10px;">"{q['Description']}"</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="quiz-box">'
+            f'<div style="font-size:0.88rem; color:#a5b4fc; font-weight:700;">หมวด: {q["Category"]} — ฟังก์ชันใดทำหน้าที่นี้?</div>'
+            f'<div style="font-size:1.4rem; font-weight:800; margin-top:8px;">"{q["Description"]}"</div>'
+            f'</div>',
+            unsafe_allow_html=True
+        )
 
         opts = st.session_state.q_options
         labels = ["🅰️ ", "🅱️ ", "🇨 ", "🇩 "]
-        row1_c1, row1_c2 = st.columns(2)
-        row2_c1, row2_c2 = st.columns(2)
-        grid_cols = [row1_c1, row1_c2, row2_c1, row2_c2]
+        r1c1, r1c2 = st.columns(2)
+        r2c1, r2c2 = st.columns(2)
+        grid_cols = [r1c1, r1c2, r2c1, r2c2]
 
         for i, opt in enumerate(opts):
             if grid_cols[i].button(f"{labels[i]} {opt}", key=f"opt_btn_{i}", disabled=st.session_state.q_answered, use_container_width=True):
@@ -511,7 +508,7 @@ with tab3:
 # TAB 4: CROSS-TOOL TRANSLATOR
 # ==========================================
 with tab4:
-    st.subheader("🔀 เทียบสูตรข้าม 4 เครื่องมือ (ทำงานเดียวกัน เขียนต่างกันยังไง?)")
+    st.subheader("🔀 เทียบสูตรข้าม 4 เครื่องมือ")
     compare_data = [
         {"งานที่ต้องการทำ": "หาผลรวมทั้งหมด", "Excel": "=SUM(A:A)", "SQL": "SELECT SUM(col)", "Power BI DAX": "SUM(Table[Col])", "Python (Pandas)": "df['col'].sum()"},
         {"งานที่ต้องการทำ": "กรองข้อมูลตามเงื่อนไข", "Excel": "COUNTIFS / SUMIFS", "SQL": "WHERE ...", "Power BI DAX": "CALCULATE(..., FILTER())", "Python (Pandas)": "df[df['col'] > 100]"},
