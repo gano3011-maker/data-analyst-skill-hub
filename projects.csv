@@ -1,0 +1,5 @@
+Date,Project_Name,Category,Tools,Impact,Link,Description
+2026-11-24,Personal Data Analyst Skill Hub,Data App / Portfolio,"Python, Streamlit, Pandas",สร้างเว็บแอป Gamification อัปสกิล 120 ฟังก์ชันพร้อมระบบ Portfolio ออนไลน์,https://data-analyst-skill-app-cuaxbbh5phywqm5xsuuwrn.streamlit.app,พัฒนาเว็บแอปด้วย Python & Streamlit สำหรับฝึกฝน Excel SQL Power BI DAX และ Pandas
+2026-11-23,Office Stock & KPI Management Web App,BI & Process Improvement,"Google Apps Script, Google Sheets, HTML/JS, Chart.js",ลดเวลาตรวจนับสต็อก คุมสินค้า 199 รายการ พร้อมวัด KPI Lead Time และออก PR รวมอัตโนมัติ,,สร้างเว็บแอปจัดการคลังสำนักงาน ระบบเบิก-จ่าย เช็กลิสต์ตรวจนับออนไลน์ และแดชบอร์ด KPI รายเดือน
+2026-11-04,Automated Customer Email Bot,RPA / Automation,"Power Automate Desktop, Excel",ส่งอีเมลแนบไฟล์ลูกค้าอัตโนมัติ ลดงานซ้ำซ้อนและป้องกันการส่งผิดราย,,สร้างบอท Power Automate จับคู่รายชื่อไฟล์เอกสารกับอีเมลลูกค้าใน Excel เพื่อส่งอัตโนมัติ
+2026-10-15,Batch PDF Document Generator,Data Automation,"Excel, VBA Macro",สร้างและแยกไฟล์ PDF เอกสารแจ้งลูกค้าอัตโนมัติกว่า 1,000 บริษัทในไม่กี่นาที,,เขียนสคริปต์ VBA Macro ดึงข้อมูลจากตาราง Excel มาสร้างเอกสารและบันทึกเป็น PDF แยกรายบริษัท
