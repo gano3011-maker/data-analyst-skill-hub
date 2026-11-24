@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 import random
+from datetime import date
 
-st.set_page_config(page_title="Data Analyst Skill Hub", page_icon="🎮", layout="wide")
+st.set_page_config(page_title="Data Analyst Skill & Portfolio Hub", page_icon="🚀", layout="wide")
 
 # ==========================================
 # CUSTOM CSS ANIMATIONS & GAME UI
@@ -14,16 +15,12 @@ st.markdown("""
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
-    @keyframes floatCard {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-6px); }
-    }
     @keyframes pulseGlow {
         0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
         50% { box-shadow: 0 0 28px rgba(236, 72, 153, 0.75); }
     }
     @keyframes popIn {
-        0% { transform: scale(0.92); opacity: 0; }
+        0% { transform: scale(0.95); opacity: 0; }
         100% { transform: scale(1); opacity: 1; }
     }
 
@@ -37,7 +34,7 @@ st.markdown("""
         margin-bottom: 20px;
         box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
     }
-    .hero-title { font-size: 2.1rem; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
+    .hero-title { font-size: 2.1rem; font-weight: 800; margin: 0; }
     .hero-sub { font-size: 0.95rem; opacity: 0.92; margin-top: 6px; }
     .rank-badge {
         display: inline-block;
@@ -46,11 +43,10 @@ st.markdown("""
         padding: 7px 16px;
         border-radius: 999px;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         margin-top: 14px;
         border: 1px solid rgba(255,255,255,0.35);
     }
-
     .flashcard {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
         color: white;
@@ -60,12 +56,7 @@ st.markdown("""
         border: 2px solid #818cf8;
         margin: 16px 0;
         animation: pulseGlow 3.5s infinite, popIn 0.35s ease-out;
-        transition: transform 0.25s ease;
     }
-    .flashcard:hover {
-        transform: translateY(-4px) scale(1.01);
-    }
-
     .gacha-card {
         padding: 22px;
         border-radius: 18px;
@@ -79,10 +70,10 @@ st.markdown("""
 
     .badge-box {
         display: inline-block;
-        padding: 8px 14px;
+        padding: 7px 12px;
         border-radius: 12px;
         margin: 4px;
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         font-weight: 700;
     }
     .badge-unlocked { background: #ecfdf5; color: #047857; border: 1.5px solid #10b981; }
@@ -97,39 +88,77 @@ st.markdown("""
         margin-bottom: 18px;
         animation: popIn 0.3s ease-out;
     }
+    .proj-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-left: 6px solid #4f46e5;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 14px;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+        color: #1e293b;
+    }
+    .tool-tag {
+        display: inline-block;
+        background: #ede9fe;
+        color: #5b21b6;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        margin-right: 6px;
+        margin-top: 6px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-FILE_PATH = "skills.csv"
+SKILLS_FILE = "skills.csv"
+PROJECTS_FILE = "projects.csv"
 
-def load_data():
-    return pd.read_csv(FILE_PATH)
+def load_skills():
+    return pd.read_csv(SKILLS_FILE)
 
-def save_data(df):
+def save_skills(df):
     try:
-        df.to_csv(FILE_PATH, index=False)
+        df.to_csv(SKILLS_FILE, index=False)
+    except Exception:
+        pass
+
+def load_projects():
+    try:
+        return pd.read_csv(PROJECTS_FILE).fillna("")
+    except Exception:
+        return pd.DataFrame(columns=["Date", "Project_Name", "Category", "Tools", "Impact", "Link", "Description"])
+
+def save_projects(pdf):
+    try:
+        pdf.to_csv(PROJECTS_FILE, index=False)
     except Exception:
         pass
 
 if "df" not in st.session_state:
-    st.session_state.df = load_data()
+    st.session_state.df = load_skills()
+if "proj_df" not in st.session_state:
+    st.session_state.proj_df = load_projects()
 if "bonus_xp" not in st.session_state:
     st.session_state.bonus_xp = 0
 if "best_streak" not in st.session_state:
     st.session_state.best_streak = 0
 
 df = st.session_state.df
+proj_df = st.session_state.proj_df
 
-# คำนวณ XP และ Rank
+# คำนวณ XP และ Rank (รวม XP จากผลงานจริงด้วย!)
 mastered = len(df[df["Status"] == "ใช้คล่องแล้ว"])
 learning = len(df[df["Status"] == "กำลังเรียน"])
 total_skills = len(df)
-xp = (mastered * 15) + (learning * 5) + st.session_state.bonus_xp
-max_xp = total_skills * 15
+total_projects = len(proj_df)
+
+xp = (mastered * 15) + (learning * 5) + (total_projects * 50) + st.session_state.bonus_xp
 progress_pct = int((mastered / total_skills) * 100) if total_skills > 0 else 0
 
 def get_rank(points):
-    if points >= 1400: return "👑 Lv.5 Data Master"
+    if points >= 1500: return "👑 Lv.5 Data Master"
     if points >= 900:  return "🧙‍♂️ Lv.4 Analytics Wizard"
     if points >= 450:  return "⚡ Lv.3 Query Explorer"
     if points >= 150:  return "🛠️ Lv.2 Data Apprentice"
@@ -138,27 +167,121 @@ def get_rank(points):
 # Header Banner
 st.markdown(f"""
 <div class="hero-box">
-    <div class="hero-title">🎮 Personal Data Analyst Skill Hub</div>
-    <div class="hero-sub">อัปสกิล 4 เครื่องมือสาย Data แบบเกม RPG: Excel • SQL • Power BI DAX • Python (Pandas)</div>
-    <div class="rank-badge">{get_rank(xp)} &nbsp;|&nbsp; ⭐ {xp:,} XP &nbsp;|&nbsp; 🔥 Best Combo: {st.session_state.best_streak}</div>
+    <div class="hero-title">🚀 Personal Data Analyst Skill & Portfolio Hub</div>
+    <div class="hero-sub">คลังเก็บผลงานจริง + แพลตฟอร์มอัปสกิลสาย Data (Excel • SQL • Power BI DAX • Python • Automation)</div>
+    <div class="rank-badge">{get_rank(xp)} &nbsp;|&nbsp; ⭐ {xp:,} XP &nbsp;|&nbsp; 🏆 {total_projects} ผลงานจริง &nbsp;|&nbsp; 🔥 Best Combo: {st.session_state.best_streak}</div>
 </div>
 """, unsafe_allow_html=True)
 
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("📚 ฟังก์ชันทั้งหมด", f"{total_skills} ตัว")
-c2.metric("✅ ใช้คล่องแล้ว", f"{mastered} ตัว")
-c3.metric("⏳ กำลังเรียน", f"{learning} ตัว")
-c4.metric("🎯 ความคืบหน้า", f"{progress_pct}%")
+c1, c2, c3, c4, c5 = st.columns(5)
+c1.metric("🏆 ผลงานจริง", f"{total_projects} โปรเจกต์")
+c2.metric("📚 สกิลทั้งหมด", f"{total_skills} ตัว")
+c3.metric("✅ ใช้คล่องแล้ว", f"{mastered} ตัว")
+c4.metric("⏳ กำลังเรียน", f"{learning} ตัว")
+c5.metric("🎯 ความคืบหน้า", f"{progress_pct}%")
 st.progress(progress_pct / 100)
 
-# 5 แท็บหลัก
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
+# 6 แท็บหลัก (เอา Portfolio ขึ้นแท็บแรกเพื่อโชว์ความโปร!)
+tab_port, tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "🏆 พอร์ตผลงาน & สถิติ",
     "🎰 กาชาสกิล & เหรียญตรา",
     "🃏 Flashcards เรืองแสง",
-    "⚔️ เกมทายฟังก์ชัน (4 ตัวเลือก)",
+    "⚔️ เกมทายฟังก์ชัน",
     "🔀 เทียบสูตร 4 เครื่องมือ",
     "📚 คลัง 120 ฟังก์ชัน"
 ])
+
+# ==========================================
+# TAB 0: PORTFOLIO & EXPERIENCE HUB (NEW!)
+# ==========================================
+with tab_port:
+    p_left, p_right = st.columns([1.4, 1])
+
+    with p_left:
+        st.subheader("📂 ผลงานและประสบการณ์จริง (Verified Projects)")
+        if len(proj_df) == 0:
+            st.info("ยังไม่มีรายการผลงาน ลองเพิ่มผลงานแรกของคุณทางด้านขวาได้เลยครับ!")
+        else:
+            for idx, row in proj_df.sort_values(by="Date", ascending=False).iterrows():
+                tools_list = [t.strip() for t in str(row["Tools"]).split(",") if t.strip()]
+                tags_html = "".join([f'<span class="tool-tag">{t}</span>' for t in tools_list])
+                link_html = f'<a href="{row["Link"]}" target="_blank" style="color:#4f46e5; font-weight:700; text-decoration:none;">🔗 เปิดดูผลงาน</a>' if str(row["Link"]).strip() else ""
+
+                st.markdown(f"""
+                <div class="proj-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.8rem; color:#64748b; font-weight:600;">📅 {row['Date']} • {row['Category']}</span>
+                        {link_html}
+                    </div>
+                    <div style="font-size:1.25rem; font-weight:800; color:#0f172a; margin:6px 0;">{row['Project_Name']}</div>
+                    <div style="font-size:0.9rem; color:#334155; margin-bottom:8px;">{row['Description']}</div>
+                    <div style="background:#f0fdf4; border-left:3px solid #10b981; padding:8px 12px; border-radius:6px; font-size:0.88rem; color:#065f46; margin-bottom:8px;">
+                        <b>📈 Business Impact:</b> {row['Impact']}
+                    </div>
+                    <div>{tags_html}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+    with p_right:
+        st.subheader("📊 สถิติทักษะจากผลงานจริง")
+        if len(proj_df) > 0:
+            all_tools = []
+            for t_str in proj_df["Tools"]:
+                all_tools.extend([t.strip() for t in str(t_str).split(",") if t.strip()])
+            if all_tools:
+                tool_counts = pd.Series(all_tools).value_counts().reset_index()
+                tool_counts.columns = ["เครื่องมือ", "จำนวนโปรเจกต์"]
+                st.bar_chart(tool_counts.set_index("เครื่องมือ"))
+
+        with st.expander("➕ เพิ่มผลงาน / โปรเจกต์ใหม่ (+50 XP)", expanded=False):
+            with st.form("add_project_form", clear_on_submit=True):
+                p_name = st.text_input("ชื่อโปรเจกต์ / ผลงาน *")
+                p_date = st.date_input("วันที่ทำสำเร็จ", value=date.today())
+                p_cat = st.selectbox("หมวดหมู่", [
+                    "BI & Dashboard", "Data Automation / RPA", "Data App / Portfolio",
+                    "Data Analysis / Research", "SQL & Database", "อื่นๆ"
+                ])
+                p_tools = st.multiselect("เครื่องมือที่ใช้ *", [
+                    "Excel", "VBA Macro", "SQL", "Power BI", "Python", "Pandas",
+                    "Streamlit", "Google Apps Script", "Google Sheets",
+                    "Power Automate Desktop", "AppSheet", "SPSS", "HTML/JS"
+                ])
+                p_impact = st.text_input("ผลลัพธ์ทางธุรกิจ (Impact) *", placeholder="เช่น ลดเวลาทำงาน 80% / จัดการข้อมูล 1,000+ รายการ")
+                p_desc = st.text_area("รายละเอียดสั้นๆ", placeholder="อธิบายว่าทำอะไรและแก้ปัญหาอะไร")
+                p_link = st.text_input("ลิงก์ผลงาน / GitHub (ถ้ามี)")
+
+                submitted = st.form_submit_button("💾 บันทึกผลงานเข้าพอร์ต", type="primary", use_container_width=True)
+                if submitted:
+                    if not p_name or not p_tools or not p_impact:
+                        st.error("กรุณากรอก ชื่อโปรเจกต์, เครื่องมือที่ใช้ และผลลัพธ์ทางธุรกิจ ให้ครบครับ")
+                    else:
+                        new_row = pd.DataFrame([{
+                            "Date": str(p_date),
+                            "Project_Name": p_name,
+                            "Category": p_cat,
+                            "Tools": ", ".join(p_tools),
+                            "Impact": p_impact,
+                            "Link": p_link,
+                            "Description": p_desc
+                        }])
+                        st.session_state.proj_df = pd.concat([st.session_state.proj_df, new_row], ignore_index=True)
+                        save_projects(st.session_state.proj_df)
+                        st.toast("🎉 เพิ่มผลงานใหม่เข้าพอร์ตแล้ว! +50 XP", icon="🏆")
+                        st.balloons()
+                        st.rerun()
+
+        st.divider()
+        st.subheader("📤 ส่งออกหลักฐาน & สำรองข้อมูล")
+        # สร้างไฟล์สรุปเรซูเม่ Markdown
+        md_lines = [f"# Data Analyst Portfolio & Skill Summary\n- **Rank:** {get_rank(xp)} ({xp:,} XP)\n- **Verified Projects:** {total_projects}\n- **Core Skills Mastered:** {mastered}/{total_skills}\n\n## Featured Projects\n"]
+        for _, r in proj_df.iterrows():
+            md_lines.append(f"### {r['Project_Name']} ({r['Date']})\n- **Tools:** {r['Tools']}\n- **Impact:** {r['Impact']}\n- **Detail:** {r['Description']}\n")
+        resume_md = "\n".join(md_lines)
+
+        st.download_button("📄 โหลดสรุปพอร์ตสำหรับ Resume (.md)", data=resume_md, file_name="data_portfolio_summary.md", mime="text/markdown", use_container_width=True)
+        d1, d2 = st.columns(2)
+        d1.download_button("💾 สำรอง projects.csv", data=proj_df.to_csv(index=False).encode("utf-8-sig"), file_name="projects.csv", mime="text/csv", use_container_width=True)
+        d2.download_button("💾 สำรอง skills.csv", data=df.to_csv(index=False).encode("utf-8-sig"), file_name="skills.csv", mime="text/csv", use_container_width=True)
 
 # ==========================================
 # TAB 1: SKILL GACHA & ACHIEVEMENTS
@@ -168,8 +291,6 @@ with tab1:
 
     with col_l:
         st.subheader("🎰 ตู้กาชาสุ่มสกิลประจำวัน")
-        st.caption("กดสุ่มเพื่อรับภารกิจฝึกฟังก์ชัน พร้อมลุ้นระดับความหายาก R / SR / SSR!")
-
         unmastered = df[df["Status"] != "ใช้คล่องแล้ว"]
         if len(unmastered) == 0:
             st.success("🎉 สุดยอด! คุณปลดล็อกครบทั้ง 120 ฟังก์ชันแล้ว!")
@@ -184,7 +305,7 @@ with tab1:
 
             st.markdown(f"""
             <div class="gacha-card rarity-{rarity}">
-                <div style="font-size:0.85rem; font-weight:800; letter-spacing:1px; opacity:0.95;">{rarity_label} • {g_row['Category']}</div>
+                <div style="font-size:0.85rem; font-weight:800; letter-spacing:1px;">{rarity_label} • {g_row['Category']}</div>
                 <div style="font-size:1.9rem; font-weight:900; margin:8px 0;">{g_row['Function']}</div>
                 <div style="font-size:1rem; margin-bottom:12px;">{g_row['Description']}</div>
                 <div style="background:rgba(0,0,0,0.35); padding:10px 14px; border-radius:10px; font-family:monospace; font-size:0.88rem; color:#fef08a;">
@@ -203,12 +324,12 @@ with tab1:
                 st.rerun()
             if gb2.button("⏳ รับเข้าคลังเรียน (+5 XP)", use_container_width=True):
                 st.session_state.df.at[st.session_state.gacha_idx, "Status"] = "กำลังเรียน"
-                save_data(st.session_state.df)
+                save_skills(st.session_state.df)
                 st.toast("บันทึกเป็น 'กำลังเรียน' แล้ว! +5 XP", icon="⏳")
                 st.rerun()
             if gb3.button("✅ เคลียร์ภารกิจ! (+15 XP)", type="primary", use_container_width=True):
                 st.session_state.df.at[st.session_state.gacha_idx, "Status"] = "ใช้คล่องแล้ว"
-                save_data(st.session_state.df)
+                save_skills(st.session_state.df)
                 st.toast("เคลียร์ภารกิจสำเร็จ! +15 XP", icon="🏆")
                 st.balloons()
                 st.session_state.gacha_idx = random.choice(df.index.tolist())
@@ -220,6 +341,7 @@ with tab1:
         sql_done = len(df[(df["Category"] == "SQL") & (df["Status"] == "ใช้คล่องแล้ว")])
 
         badges = [
+            ("🏆 Builder ตัวจริง (มีผลงาน ≥ 3 ชิ้น)", total_projects >= 3),
             ("🌱 ก้าวแรกสาย Data (คล่อง ≥ 1 ตัว)", mastered >= 1),
             ("🔥 นักล่าสกิล (คล่อง ≥ 10 ตัว)", mastered >= 10),
             ("⚡ Combo Master (ทายถูก 3 ข้อติด)", st.session_state.best_streak >= 3),
@@ -256,10 +378,9 @@ with tab2:
         st.session_state.fc_flip = False
 
     card = df.loc[st.session_state.fc_idx]
-
     answer_html = (
         f"<hr style='border-color:#4f46e5; margin:20px 0;'>"
-        f"<div style='font-size:1.15rem; color:#f1f5f9; font-weight:500;'>{card['Description']}</div>"
+        f"<div style='font-size:1.15rem; color:#f1f5f9;'>{card['Description']}</div>"
         f"<div style='margin-top:16px; background:#020617; padding:14px; border-radius:12px; font-family:monospace; color:#34d399; font-size:0.95rem;'>{card['Example']}</div>"
         if st.session_state.fc_flip
         else "<div style='margin-top:18px; color:#94a3b8; font-size:0.95rem;'>นึกในใจก่อนว่าฟังก์ชันนี้ใช้ทำอะไร แล้วกดปุ่มพลิกการ์ดด้านล่าง 👇</div>"
@@ -283,21 +404,21 @@ with tab2:
         st.rerun()
     if f3.button("🤔 พอคุ้นๆ (+5 XP)", use_container_width=True):
         st.session_state.df.at[st.session_state.fc_idx, "Status"] = "กำลังเรียน"
-        save_data(st.session_state.df)
+        save_skills(st.session_state.df)
         st.toast("อัปเดตเป็น 'กำลังเรียน' แล้ว! +5 XP", icon="⏳")
         st.session_state.fc_idx = random.choice(fc_pool.index.tolist())
         st.session_state.fc_flip = False
         st.rerun()
     if f4.button("🔥 จำแม่นแล้ว (+15 XP)", type="primary", use_container_width=True):
         st.session_state.df.at[st.session_state.fc_idx, "Status"] = "ใช้คล่องแล้ว"
-        save_data(st.session_state.df)
+        save_skills(st.session_state.df)
         st.toast("ยอดเยี่ยม! ปลดล็อกเป็น 'ใช้คล่องแล้ว' +15 XP", icon="🔥")
         st.session_state.fc_idx = random.choice(fc_pool.index.tolist())
         st.session_state.fc_flip = False
         st.rerun()
 
 # ==========================================
-# TAB 3: KAHOOT-STYLE MINI GAME (HP + COMBO + 4 BUTTONS)
+# TAB 3: KAHOOT-STYLE MINI GAME
 # ==========================================
 with tab3:
     st.subheader("⚔️ เกมทายฟังก์ชันสาย Data (กดตัวเลือกได้เลย!)")
@@ -323,7 +444,6 @@ with tab3:
     if "q_target" not in st.session_state:
         new_question()
 
-    # แถบควบคุมหมวด + สถานะเกม
     gc1, gc2, gc3, gc4 = st.columns([1.4, 1, 1, 1])
     chosen_cat = gc1.selectbox("โหมดหมวดหมู่:", ["ทั้งหมด"] + list(df["Category"].unique()), key="quiz_cat_sel")
     if chosen_cat != st.session_state.quiz_cat:
@@ -336,7 +456,6 @@ with tab3:
     gc3.metric("🏆 คะแนน", f"{st.session_state.quiz_score} แต้ม")
     gc4.metric("🔥 คอมโบ", f"{st.session_state.quiz_streak} ข้อติด")
 
-    # เช็ก Game Over
     if st.session_state.quiz_hp <= 0:
         st.error(f"💀 GAME OVER! หัวใจหมดแล้ว — รอบนี้คุณทำได้ **{st.session_state.quiz_score} แต้ม** (คอมโบสูงสุด {st.session_state.best_streak})")
         if st.button("🔄 เริ่มเล่นรอบใหม่ (รีเซ็ตหัวใจ ❤️❤️❤️)", type="primary", use_container_width=True):
@@ -354,7 +473,6 @@ with tab3:
         </div>
         """, unsafe_allow_html=True)
 
-        # ปุ่มตัวเลือก 4 ปุ่มแบบ 2x2 Grid
         opts = st.session_state.q_options
         labels = ["🅰️ ", "🅱️ ", "🇨 ", "🇩 "]
         row1_c1, row1_c2 = st.columns(2)
@@ -362,12 +480,7 @@ with tab3:
         grid_cols = [row1_c1, row1_c2, row2_c1, row2_c2]
 
         for i, opt in enumerate(opts):
-            if grid_cols[i].button(
-                f"{labels[i]} {opt}",
-                key=f"opt_btn_{i}",
-                disabled=st.session_state.q_answered,
-                use_container_width=True
-            ):
+            if grid_cols[i].button(f"{labels[i]} {opt}", key=f"opt_btn_{i}", disabled=st.session_state.q_answered, use_container_width=True):
                 st.session_state.q_answered = True
                 st.session_state.q_picked = opt
                 if opt == q["Function"]:
@@ -390,7 +503,6 @@ with tab3:
                 st.success(f"🎉 ถูกต้องครับ! คำตอบคือ **{q['Function']}**\n\nตัวอย่างโค้ด: `{q['Example']}`")
             else:
                 st.error(f"❌ คุณตอบ `{st.session_state.q_picked}` — คำตอบที่ถูกคือ **{q['Function']}**\n\nตัวอย่างโค้ด: `{q['Example']}`")
-
             if st.button("➡️ ลุยข้อถัดไป!", type="primary", use_container_width=True):
                 new_question(st.session_state.quiz_cat)
                 st.rerun()
@@ -432,11 +544,7 @@ with tab5:
     edited_df = st.data_editor(
         filtered_df,
         column_config={
-            "Status": st.column_config.SelectboxColumn(
-                "สถานะ",
-                options=["ยังไม่เริ่ม", "กำลังเรียน", "ใช้คล่องแล้ว"],
-                required=True,
-            ),
+            "Status": st.column_config.SelectboxColumn("สถานะ", options=["ยังไม่เริ่ม", "กำลังเรียน", "ใช้คล่องแล้ว"], required=True),
             "Example": st.column_config.TextColumn("ตัวอย่างการใช้งาน", width="large"),
         },
         disabled=["Category", "Function", "Description"],
@@ -447,6 +555,6 @@ with tab5:
 
     if st.button("💾 บันทึกความคืบหน้า", type="primary"):
         st.session_state.df.update(edited_df)
-        save_data(st.session_state.df)
+        save_skills(st.session_state.df)
         st.toast("บันทึกสถานะและอัปเดต XP เรียบร้อยแล้ว!", icon="💾")
         st.rerun()
