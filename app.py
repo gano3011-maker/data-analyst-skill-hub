@@ -2,44 +2,100 @@ import streamlit as st
 import pandas as pd
 import random
 
-st.set_page_config(page_title="Data Analyst Skill Hub", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="Data Analyst Skill Hub", page_icon="🎮", layout="wide")
 
-# ตกแต่ง UI เพิ่มสีสันด้วย CSS
+# ==========================================
+# CUSTOM CSS ANIMATIONS & GAME UI
+# ==========================================
 st.markdown("""
 <style>
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    @keyframes floatCard {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-6px); }
+    }
+    @keyframes pulseGlow {
+        0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
+        50% { box-shadow: 0 0 28px rgba(236, 72, 153, 0.75); }
+    }
+    @keyframes popIn {
+        0% { transform: scale(0.92); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
     .hero-box {
-        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
-        padding: 24px 28px;
-        border-radius: 16px;
+        background: linear-gradient(-45deg, #4f46e5, #7c3aed, #ec4899, #06b6d4);
+        background-size: 300% 300%;
+        animation: gradientBG 8s ease infinite;
+        padding: 26px 30px;
+        border-radius: 20px;
         color: white;
         margin-bottom: 20px;
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
     }
-    .hero-title { font-size: 2rem; font-weight: 800; margin: 0; }
-    .hero-sub { font-size: 0.95rem; opacity: 0.9; margin-top: 6px; }
+    .hero-title { font-size: 2.1rem; font-weight: 800; margin: 0; letter-spacing: -0.5px; }
+    .hero-sub { font-size: 0.95rem; opacity: 0.92; margin-top: 6px; }
     .rank-badge {
         display: inline-block;
-        background: rgba(255,255,255,0.2);
-        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(8px);
+        padding: 7px 16px;
         border-radius: 999px;
         font-weight: 700;
-        font-size: 0.9rem;
-        margin-top: 12px;
+        font-size: 0.95rem;
+        margin-top: 14px;
+        border: 1px solid rgba(255,255,255,0.35);
     }
+
     .flashcard {
-        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
         color: white;
-        padding: 36px 24px;
-        border-radius: 18px;
+        padding: 42px 28px;
+        border-radius: 22px;
         text-align: center;
-        border: 2px solid #6366f1;
-        margin: 12px 0;
+        border: 2px solid #818cf8;
+        margin: 16px 0;
+        animation: pulseGlow 3.5s infinite, popIn 0.35s ease-out;
+        transition: transform 0.25s ease;
     }
-    .mission-card {
-        background: #f8fafc;
-        border-left: 6px solid #7c3aed;
-        padding: 18px 20px;
+    .flashcard:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+
+    .gacha-card {
+        padding: 22px;
+        border-radius: 18px;
+        color: white;
+        animation: popIn 0.4s ease-out;
+        margin-bottom: 12px;
+    }
+    .rarity-SSR { background: linear-gradient(135deg, #f59e0b 0%, #ea580c 50%, #db2777 100%); border: 2px solid #fde047; box-shadow: 0 0 22px rgba(245, 158, 11, 0.6); }
+    .rarity-SR  { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); border: 2px solid #c4b5fd; box-shadow: 0 0 18px rgba(124, 58, 237, 0.5); }
+    .rarity-R   { background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border: 2px solid #7dd3fc; }
+
+    .badge-box {
+        display: inline-block;
+        padding: 8px 14px;
         border-radius: 12px;
-        color: #1e293b;
+        margin: 4px;
+        font-size: 0.85rem;
+        font-weight: 700;
+    }
+    .badge-unlocked { background: #ecfdf5; color: #047857; border: 1.5px solid #10b981; }
+    .badge-locked   { background: #f1f5f9; color: #94a3b8; border: 1.5px dashed #cbd5e1; }
+
+    .quiz-box {
+        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+        color: white;
+        padding: 28px;
+        border-radius: 18px;
+        border: 2px solid #6366f1;
+        margin-bottom: 18px;
+        animation: popIn 0.3s ease-out;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -53,11 +109,14 @@ def save_data(df):
     try:
         df.to_csv(FILE_PATH, index=False)
     except Exception:
-        pass  # กรณีรันบน Cloud บางจังหวะ เก็บไว้ใน session_state ต่อได้
+        pass
 
-# เก็บข้อมูลใน session_state เพื่อให้อัปเดตลื่นไหลทุกแท็บ
 if "df" not in st.session_state:
     st.session_state.df = load_data()
+if "bonus_xp" not in st.session_state:
+    st.session_state.bonus_xp = 0
+if "best_streak" not in st.session_state:
+    st.session_state.best_streak = 0
 
 df = st.session_state.df
 
@@ -65,7 +124,7 @@ df = st.session_state.df
 mastered = len(df[df["Status"] == "ใช้คล่องแล้ว"])
 learning = len(df[df["Status"] == "กำลังเรียน"])
 total_skills = len(df)
-xp = (mastered * 15) + (learning * 5)
+xp = (mastered * 15) + (learning * 5) + st.session_state.bonus_xp
 max_xp = total_skills * 15
 progress_pct = int((mastered / total_skills) * 100) if total_skills > 0 else 0
 
@@ -79,13 +138,12 @@ def get_rank(points):
 # Header Banner
 st.markdown(f"""
 <div class="hero-box">
-    <div class="hero-title">🚀 Personal Data Analyst Skill Hub</div>
-    <div class="hero-sub">อัปสกิล 4 เครื่องมือหลักสาย Data: Excel • SQL • Power BI DAX • Python (Pandas)</div>
-    <div class="rank-badge">{get_rank(xp)} &nbsp;|&nbsp; ⭐ {xp:,} / {max_xp:,} XP</div>
+    <div class="hero-title">🎮 Personal Data Analyst Skill Hub</div>
+    <div class="hero-sub">อัปสกิล 4 เครื่องมือสาย Data แบบเกม RPG: Excel • SQL • Power BI DAX • Python (Pandas)</div>
+    <div class="rank-badge">{get_rank(xp)} &nbsp;|&nbsp; ⭐ {xp:,} XP &nbsp;|&nbsp; 🔥 Best Combo: {st.session_state.best_streak}</div>
 </div>
 """, unsafe_allow_html=True)
 
-# แถบ Metrics ภาพรวม
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("📚 ฟังก์ชันทั้งหมด", f"{total_skills} ตัว")
 c2.metric("✅ ใช้คล่องแล้ว", f"{mastered} ตัว")
@@ -93,86 +151,104 @@ c3.metric("⏳ กำลังเรียน", f"{learning} ตัว")
 c4.metric("🎯 ความคืบหน้า", f"{progress_pct}%")
 st.progress(progress_pct / 100)
 
-# สร้าง 5 แท็บหลัก
+# 5 แท็บหลัก
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "📊 ภาพรวม & ภารกิจวันนี้",
-    "🃏 Flashcards ทบทวน",
-    "🎮 มินิเกมทายฟังก์ชัน",
+    "🎰 กาชาสกิล & เหรียญตรา",
+    "🃏 Flashcards เรืองแสง",
+    "⚔️ เกมทายฟังก์ชัน (4 ตัวเลือก)",
     "🔀 เทียบสูตร 4 เครื่องมือ",
     "📚 คลัง 120 ฟังก์ชัน"
 ])
 
 # ==========================================
-# TAB 1: DASHBOARD & DAILY MISSION
+# TAB 1: SKILL GACHA & ACHIEVEMENTS
 # ==========================================
 with tab1:
-    col_left, col_right = st.columns([1.3, 1])
+    col_l, col_r = st.columns([1.2, 1])
 
-    with col_left:
-        st.subheader("📈 ความคืบหน้าแยกตามเครื่องมือ")
-        cat_summary = []
-        for cat in df["Category"].unique():
-            sub = df[df["Category"] == cat]
-            done = len(sub[sub["Status"] == "ใช้คล่องแล้ว"])
-            in_prog = len(sub[sub["Status"] == "กำลังเรียน"])
-            not_start = len(sub[sub["Status"] == "ยังไม่เริ่ม"])
-            pct = int((done / len(sub)) * 100) if len(sub) > 0 else 0
-            st.write(f"**{cat}** — คล่องแล้ว {done}/{len(sub)} ตัว ({pct}%)")
-            st.progress(pct / 100)
-            cat_summary.append({
-                "เครื่องมือ": cat,
-                "ใช้คล่องแล้ว": done,
-                "กำลังเรียน": in_prog,
-                "ยังไม่เริ่ม": not_start
-            })
+    with col_l:
+        st.subheader("🎰 ตู้กาชาสุ่มสกิลประจำวัน")
+        st.caption("กดสุ่มเพื่อรับภารกิจฝึกฟังก์ชัน พร้อมลุ้นระดับความหายาก R / SR / SSR!")
 
-        chart_df = pd.DataFrame(cat_summary).set_index("เครื่องมือ")
-        st.bar_chart(chart_df[["ใช้คล่องแล้ว", "กำลังเรียน"]])
-
-    with col_right:
-        st.subheader("🎯 ภารกิจประจำวัน (Daily Mission)")
         unmastered = df[df["Status"] != "ใช้คล่องแล้ว"]
-
         if len(unmastered) == 0:
-            st.success("🎉 สุดยอด! คุณเก็บครบทั้ง 120 ฟังก์ชันแล้ว!")
+            st.success("🎉 สุดยอด! คุณปลดล็อกครบทั้ง 120 ฟังก์ชันแล้ว!")
         else:
-            if "mission_idx" not in st.session_state or st.session_state.mission_idx not in unmastered.index:
-                st.session_state.mission_idx = random.choice(unmastered.index.tolist())
+            if "gacha_idx" not in st.session_state or st.session_state.gacha_idx not in unmastered.index:
+                st.session_state.gacha_idx = random.choice(unmastered.index.tolist())
+                st.session_state.gacha_rarity = random.choices(["R", "SR", "SSR"], weights=[55, 30, 15])[0]
 
-            m_row = df.loc[st.session_state.mission_idx]
+            g_row = df.loc[st.session_state.gacha_idx]
+            rarity = st.session_state.gacha_rarity
+            rarity_label = {"SSR": "🌟 SSR (Legendary Skill)", "SR": "💎 SR (Epic Skill)", "R": "🔹 R (Core Skill)"}[rarity]
+
             st.markdown(f"""
-            <div class="mission-card">
-                <div style="font-size:0.85rem; color:#6d28d9; font-weight:700;">หมวด: {m_row['Category']}</div>
-                <div style="font-size:1.6rem; font-weight:800; margin:6px 0;">{m_row['Function']}</div>
-                <div style="font-size:0.95rem; margin-bottom:10px;">{m_row['Description']}</div>
-                <div style="background:#1e293b; color:#38bdf8; padding:10px 12px; border-radius:8px; font-family:monospace; font-size:0.85rem;">
-                    {m_row['Example']}
+            <div class="gacha-card rarity-{rarity}">
+                <div style="font-size:0.85rem; font-weight:800; letter-spacing:1px; opacity:0.95;">{rarity_label} • {g_row['Category']}</div>
+                <div style="font-size:1.9rem; font-weight:900; margin:8px 0;">{g_row['Function']}</div>
+                <div style="font-size:1rem; margin-bottom:12px;">{g_row['Description']}</div>
+                <div style="background:rgba(0,0,0,0.35); padding:10px 14px; border-radius:10px; font-family:monospace; font-size:0.88rem; color:#fef08a;">
+                    {g_row['Example']}
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-            st.write("")
-            b1, b2, b3 = st.columns(3)
-            if b1.button("🎲 สุ่มภารกิจใหม่", use_container_width=True):
-                st.session_state.mission_idx = random.choice(unmastered.index.tolist())
+            gb1, gb2, gb3 = st.columns(3)
+            if gb1.button("🎲 กดสุ่มกาชาใหม่!", use_container_width=True):
+                st.session_state.gacha_idx = random.choice(unmastered.index.tolist())
+                st.session_state.gacha_rarity = random.choices(["R", "SR", "SSR"], weights=[55, 30, 15])[0]
+                if st.session_state.gacha_rarity == "SSR":
+                    st.toast("🌟 โอ้โห! สุ่มได้การ์ดระดับ SSR!", icon="🎉")
+                    st.snow()
                 st.rerun()
-            if b2.button("⏳ กำลังเรียน (+5 XP)", use_container_width=True):
-                st.session_state.df.at[st.session_state.mission_idx, "Status"] = "กำลังเรียน"
+            if gb2.button("⏳ รับเข้าคลังเรียน (+5 XP)", use_container_width=True):
+                st.session_state.df.at[st.session_state.gacha_idx, "Status"] = "กำลังเรียน"
                 save_data(st.session_state.df)
+                st.toast("บันทึกเป็น 'กำลังเรียน' แล้ว! +5 XP", icon="⏳")
                 st.rerun()
-            if b3.button("✅ คล่องแล้ว (+15 XP)", type="primary", use_container_width=True):
-                st.session_state.df.at[st.session_state.mission_idx, "Status"] = "ใช้คล่องแล้ว"
+            if gb3.button("✅ เคลียร์ภารกิจ! (+15 XP)", type="primary", use_container_width=True):
+                st.session_state.df.at[st.session_state.gacha_idx, "Status"] = "ใช้คล่องแล้ว"
                 save_data(st.session_state.df)
+                st.toast("เคลียร์ภารกิจสำเร็จ! +15 XP", icon="🏆")
                 st.balloons()
-                st.session_state.mission_idx = random.choice(df.index.tolist())
+                st.session_state.gacha_idx = random.choice(df.index.tolist())
                 st.rerun()
 
+    with col_r:
+        st.subheader("🏅 เหรียญตราความสำเร็จ (Achievements)")
+        excel_done = len(df[(df["Category"] == "Excel") & (df["Status"] == "ใช้คล่องแล้ว")])
+        sql_done = len(df[(df["Category"] == "SQL") & (df["Status"] == "ใช้คล่องแล้ว")])
+
+        badges = [
+            ("🌱 ก้าวแรกสาย Data (คล่อง ≥ 1 ตัว)", mastered >= 1),
+            ("🔥 นักล่าสกิล (คล่อง ≥ 10 ตัว)", mastered >= 10),
+            ("⚡ Combo Master (ทายถูก 3 ข้อติด)", st.session_state.best_streak >= 3),
+            ("📗 Excel Starter (Excel ≥ 5 ตัว)", excel_done >= 5),
+            ("🗄️ SQL Hunter (SQL ≥ 5 ตัว)", sql_done >= 5),
+            ("👑 Data Legend (XP ≥ 500)", xp >= 500),
+        ]
+        badge_html = ""
+        for name, unlocked in badges:
+            cls = "badge-unlocked" if unlocked else "badge-locked"
+            icon = "🔓 " if unlocked else "🔒 "
+            badge_html += f'<span class="badge-box {cls}">{icon}{name}</span>'
+        st.markdown(badge_html, unsafe_allow_html=True)
+
+        st.divider()
+        st.subheader("📈 ความคืบหน้าแต่ละเครื่องมือ")
+        for cat in df["Category"].unique():
+            sub = df[df["Category"] == cat]
+            done = len(sub[sub["Status"] == "ใช้คล่องแล้ว"])
+            pct = int((done / len(sub)) * 100) if len(sub) > 0 else 0
+            st.write(f"**{cat}** ({done}/{len(sub)}) — {pct}%")
+            st.progress(pct / 100)
+
 # ==========================================
-# TAB 2: FLASHCARDS
+# TAB 2: GLOWING FLASHCARDS
 # ==========================================
 with tab2:
     st.subheader("🃏 การ์ดทบทวนความจำ (Flashcards)")
-    fc_cat = st.selectbox("เลือกหมวดที่อยากทบทวน:", ["ทั้งหมด"] + list(df["Category"].unique()))
+    fc_cat = st.selectbox("เลือกหมวดที่อยากทบทวน:", ["ทั้งหมด"] + list(df["Category"].unique()), key="fc_cat_sel")
     fc_pool = df if fc_cat == "ทั้งหมด" else df[df["Category"] == fc_cat]
 
     if "fc_idx" not in st.session_state or st.session_state.fc_idx not in fc_pool.index:
@@ -181,42 +257,60 @@ with tab2:
 
     card = df.loc[st.session_state.fc_idx]
 
+    answer_html = (
+        f"<hr style='border-color:#4f46e5; margin:20px 0;'>"
+        f"<div style='font-size:1.15rem; color:#f1f5f9; font-weight:500;'>{card['Description']}</div>"
+        f"<div style='margin-top:16px; background:#020617; padding:14px; border-radius:12px; font-family:monospace; color:#34d399; font-size:0.95rem;'>{card['Example']}</div>"
+        if st.session_state.fc_flip
+        else "<div style='margin-top:18px; color:#94a3b8; font-size:0.95rem;'>นึกในใจก่อนว่าฟังก์ชันนี้ใช้ทำอะไร แล้วกดปุ่มพลิกการ์ดด้านล่าง 👇</div>"
+    )
+
     st.markdown(f"""
     <div class="flashcard">
-        <div style="font-size:0.9rem; color:#a5b4fc; margin-bottom:8px;">{card['Category']} • สถานะ: {card['Status']}</div>
-        <div style="font-size:2.2rem; font-weight:800; color:#f8fafc;">{card['Function']}</div>
-        {"<hr style='border-color:#475569; margin:18px 0;'><div style='font-size:1.1rem; color:#e2e8f0;'>" + str(card['Description']) + "</div><div style='margin-top:14px; background:#0f172a; padding:12px; border-radius:10px; font-family:monospace; color:#34d399;'>" + str(card['Example']) + "</div>" if st.session_state.fc_flip else "<div style='margin-top:16px; color:#94a3b8; font-size:0.95rem;'>นึกในใจก่อนว่าฟังก์ชันนี้ใช้ทำอะไร แล้วกดปุ่มเฉลยด้านล่าง 👇</div>"}
+        <div style="font-size:0.9rem; color:#c4b5fd; font-weight:600; margin-bottom:8px;">{card['Category']} • สถานะปัจจุบัน: {card['Status']}</div>
+        <div style="font-size:2.4rem; font-weight:900; color:#ffffff;">{card['Function']}</div>
+        {answer_html}
     </div>
     """, unsafe_allow_html=True)
 
-    fc1, fc2, fc3 = st.columns(3)
-    if fc1.button("🔄 พลิกการ์ดดูเฉลย / ซ่อน", use_container_width=True):
+    f1, f2, f3, f4 = st.columns(4)
+    if f1.button("🔄 พลิกดูเฉลย", use_container_width=True):
         st.session_state.fc_flip = not st.session_state.fc_flip
         st.rerun()
-    if fc2.button("✅ จำแม่นแล้ว! (เปลี่ยนเป็นคล่องแล้ว)", type="primary", use_container_width=True):
+    if f2.button("😅 ยังงงอยู่ (สุ่มใหม่)", use_container_width=True):
+        st.session_state.fc_idx = random.choice(fc_pool.index.tolist())
+        st.session_state.fc_flip = False
+        st.rerun()
+    if f3.button("🤔 พอคุ้นๆ (+5 XP)", use_container_width=True):
+        st.session_state.df.at[st.session_state.fc_idx, "Status"] = "กำลังเรียน"
+        save_data(st.session_state.df)
+        st.toast("อัปเดตเป็น 'กำลังเรียน' แล้ว! +5 XP", icon="⏳")
+        st.session_state.fc_idx = random.choice(fc_pool.index.tolist())
+        st.session_state.fc_flip = False
+        st.rerun()
+    if f4.button("🔥 จำแม่นแล้ว (+15 XP)", type="primary", use_container_width=True):
         st.session_state.df.at[st.session_state.fc_idx, "Status"] = "ใช้คล่องแล้ว"
         save_data(st.session_state.df)
-        st.session_state.fc_idx = random.choice(fc_pool.index.tolist())
-        st.session_state.fc_flip = False
-        st.rerun()
-    if fc3.button("➡️ สุ่มใบถัดไป", use_container_width=True):
+        st.toast("ยอดเยี่ยม! ปลดล็อกเป็น 'ใช้คล่องแล้ว' +15 XP", icon="🔥")
         st.session_state.fc_idx = random.choice(fc_pool.index.tolist())
         st.session_state.fc_flip = False
         st.rerun()
 
 # ==========================================
-# TAB 3: MINI QUIZ GAME
+# TAB 3: KAHOOT-STYLE MINI GAME (HP + COMBO + 4 BUTTONS)
 # ==========================================
 with tab3:
-    st.subheader("🎮 มินิเกมทายฟังก์ชันสาย Data")
+    st.subheader("⚔️ เกมทายฟังก์ชันสาย Data (กดตัวเลือกได้เลย!)")
 
-    if "quiz_score" not in st.session_state:
+    if "quiz_hp" not in st.session_state:
+        st.session_state.quiz_hp = 3
         st.session_state.quiz_score = 0
-        st.session_state.quiz_total = 0
         st.session_state.quiz_streak = 0
+        st.session_state.quiz_cat = "ทั้งหมด"
 
-    def new_question():
-        target = df.sample(1).iloc[0]
+    def new_question(cat_filter="ทั้งหมด"):
+        pool = df if cat_filter == "ทั้งหมด" else df[df["Category"] == cat_filter]
+        target = pool.sample(1).iloc[0]
         same_cat = df[(df["Category"] == target["Category"]) & (df["Function"] != target["Function"])]
         wrong_choices = same_cat.sample(min(3, len(same_cat)))["Function"].tolist()
         options = wrong_choices + [target["Function"]]
@@ -224,58 +318,88 @@ with tab3:
         st.session_state.q_target = target.to_dict()
         st.session_state.q_options = options
         st.session_state.q_answered = False
-        st.session_state.q_result = ""
+        st.session_state.q_picked = None
 
     if "q_target" not in st.session_state:
         new_question()
 
-    qs1, qs2, qs3 = st.columns(3)
-    qs1.metric("🏆 คะแนนสะสม", f"{st.session_state.quiz_score} / {st.session_state.quiz_total}")
-    qs2.metric("🔥 คอมโบต่อเนื่อง", f"{st.session_state.quiz_streak} ข้อติด")
-    if qs3.button("🔄 รีเซ็ตคะแนน", use_container_width=True):
-        st.session_state.quiz_score = 0
-        st.session_state.quiz_total = 0
-        st.session_state.quiz_streak = 0
-        new_question()
+    # แถบควบคุมหมวด + สถานะเกม
+    gc1, gc2, gc3, gc4 = st.columns([1.4, 1, 1, 1])
+    chosen_cat = gc1.selectbox("โหมดหมวดหมู่:", ["ทั้งหมด"] + list(df["Category"].unique()), key="quiz_cat_sel")
+    if chosen_cat != st.session_state.quiz_cat:
+        st.session_state.quiz_cat = chosen_cat
+        new_question(chosen_cat)
         st.rerun()
 
-    q = st.session_state.q_target
-    st.info(f"**หมวด {q['Category']}** — ฟังก์ชันใดมีหน้าที่ดังนี้?\n\n### \"{q['Description']}\"")
+    hearts = "❤️" * st.session_state.quiz_hp + "🖤" * (3 - st.session_state.quiz_hp)
+    gc2.metric("พลังชีวิต (HP)", hearts)
+    gc3.metric("🏆 คะแนน", f"{st.session_state.quiz_score} แต้ม")
+    gc4.metric("🔥 คอมโบ", f"{st.session_state.quiz_streak} ข้อติด")
 
-    choice = st.radio("เลือกคำตอบของคุณ:", st.session_state.q_options, index=None, disabled=st.session_state.q_answered)
-
-    qb1, qb2 = st.columns(2)
-    if qb1.button("✔️ ส่งคำตอบ", type="primary", disabled=st.session_state.q_answered or choice is None, use_container_width=True):
-        st.session_state.quiz_total += 1
-        st.session_state.q_answered = True
-        if choice == q["Function"]:
-            st.session_state.quiz_score += 1
-            st.session_state.quiz_streak += 1
-            st.session_state.q_result = "correct"
-            if st.session_state.quiz_streak % 3 == 0:
-                st.balloons()
-        else:
+    # เช็ก Game Over
+    if st.session_state.quiz_hp <= 0:
+        st.error(f"💀 GAME OVER! หัวใจหมดแล้ว — รอบนี้คุณทำได้ **{st.session_state.quiz_score} แต้ม** (คอมโบสูงสุด {st.session_state.best_streak})")
+        if st.button("🔄 เริ่มเล่นรอบใหม่ (รีเซ็ตหัวใจ ❤️❤️❤️)", type="primary", use_container_width=True):
+            st.session_state.quiz_hp = 3
+            st.session_state.quiz_score = 0
             st.session_state.quiz_streak = 0
-            st.session_state.q_result = "wrong"
-        st.rerun()
+            new_question(st.session_state.quiz_cat)
+            st.rerun()
+    else:
+        q = st.session_state.q_target
+        st.markdown(f"""
+        <div class="quiz-box">
+            <div style="font-size:0.9rem; color:#a5b4fc; font-weight:700;">หมวด: {q['Category']} — ฟังก์ชันใดทำหน้าที่นี้?</div>
+            <div style="font-size:1.5rem; font-weight:800; margin-top:10px;">"{q['Description']}"</div>
+        </div>
+        """, unsafe_allow_html=True)
 
-    if qb2.button("➡️ ข้อถัดไป", use_container_width=True):
-        new_question()
-        st.rerun()
+        # ปุ่มตัวเลือก 4 ปุ่มแบบ 2x2 Grid
+        opts = st.session_state.q_options
+        labels = ["🅰️ ", "🅱️ ", "🇨 ", "🇩 "]
+        row1_c1, row1_c2 = st.columns(2)
+        row2_c1, row2_c2 = st.columns(2)
+        grid_cols = [row1_c1, row1_c2, row2_c1, row2_c2]
 
-    if st.session_state.q_answered:
-        if st.session_state.q_result == "correct":
-            st.success(f"🎉 ถูกต้อง! คำตอบคือ **{q['Function']}**\n\nตัวอย่าง: `{q['Example']}`")
-        else:
-            st.error(f"❌ ยังไม่ถูกครับ คำตอบที่ถูกต้องคือ **{q['Function']}**\n\nตัวอย่าง: `{q['Example']}`")
+        for i, opt in enumerate(opts):
+            if grid_cols[i].button(
+                f"{labels[i]} {opt}",
+                key=f"opt_btn_{i}",
+                disabled=st.session_state.q_answered,
+                use_container_width=True
+            ):
+                st.session_state.q_answered = True
+                st.session_state.q_picked = opt
+                if opt == q["Function"]:
+                    st.session_state.quiz_score += 10
+                    st.session_state.quiz_streak += 1
+                    st.session_state.bonus_xp += 5
+                    if st.session_state.quiz_streak > st.session_state.best_streak:
+                        st.session_state.best_streak = st.session_state.quiz_streak
+                    st.toast(f"🎉 ถูกต้อง! +10 แต้ม (+5 XP) | 🔥 Combo x{st.session_state.quiz_streak}", icon="✅")
+                    if st.session_state.quiz_streak % 3 == 0:
+                        st.balloons()
+                else:
+                    st.session_state.quiz_hp -= 1
+                    st.session_state.quiz_streak = 0
+                    st.toast("❌ พลาดไปนิดเดียว! เสียหัวใจ 1 ดวง 💔", icon="💔")
+                st.rerun()
+
+        if st.session_state.q_answered:
+            if st.session_state.q_picked == q["Function"]:
+                st.success(f"🎉 ถูกต้องครับ! คำตอบคือ **{q['Function']}**\n\nตัวอย่างโค้ด: `{q['Example']}`")
+            else:
+                st.error(f"❌ คุณตอบ `{st.session_state.q_picked}` — คำตอบที่ถูกคือ **{q['Function']}**\n\nตัวอย่างโค้ด: `{q['Example']}`")
+
+            if st.button("➡️ ลุยข้อถัดไป!", type="primary", use_container_width=True):
+                new_question(st.session_state.quiz_cat)
+                st.rerun()
 
 # ==========================================
 # TAB 4: CROSS-TOOL TRANSLATOR
 # ==========================================
 with tab4:
     st.subheader("🔀 เทียบสูตรข้าม 4 เครื่องมือ (ทำงานเดียวกัน เขียนต่างกันยังไง?)")
-    st.caption("ช่วยให้จำเชื่อมโยงได้เร็วขึ้นเวลาต้องย้ายงานจาก Excel ไปทำใน SQL, Power BI หรือ Python")
-
     compare_data = [
         {"งานที่ต้องการทำ": "หาผลรวมทั้งหมด", "Excel": "=SUM(A:A)", "SQL": "SELECT SUM(col)", "Power BI DAX": "SUM(Table[Col])", "Python (Pandas)": "df['col'].sum()"},
         {"งานที่ต้องการทำ": "กรองข้อมูลตามเงื่อนไข", "Excel": "COUNTIFS / SUMIFS", "SQL": "WHERE ...", "Power BI DAX": "CALCULATE(..., FILTER())", "Python (Pandas)": "df[df['col'] > 100]"},
@@ -305,7 +429,6 @@ with tab5:
             filtered_df["Description"].str.contains(search_query, case=False, na=False)
         ]
 
-    st.caption(f"แสดงทั้งหมด {len(filtered_df)} จาก {len(df)} รายการ (ดับเบิลคลิกที่ช่อง 'สถานะ' เพื่อเปลี่ยน)")
     edited_df = st.data_editor(
         filtered_df,
         column_config={
@@ -325,5 +448,5 @@ with tab5:
     if st.button("💾 บันทึกความคืบหน้า", type="primary"):
         st.session_state.df.update(edited_df)
         save_data(st.session_state.df)
-        st.success("บันทึกสถานะและอัปเดต XP เรียบร้อยแล้ว!")
+        st.toast("บันทึกสถานะและอัปเดต XP เรียบร้อยแล้ว!", icon="💾")
         st.rerun()
